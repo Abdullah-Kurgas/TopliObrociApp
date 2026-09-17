@@ -1,0 +1,64 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="TopliObrociApp.Views.LoginView">
+
+    <Grid>
+        <Border
+            Width="400"
+            Padding="35"
+            CornerRadius="12"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="{DynamicResource SystemControlBackgroundBaseLowBrush}"
+            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
+
+
+            <StackPanel Spacing="15">
+                <StackPanel Margin="0 0 0 15" Spacing="10">
+                    <TextBlock
+                        Text="Topli obroci"
+                        FontSize="28"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center" />
+
+                    <TextBlock
+                        Text="Prijavite se da pregledate svoje obroke"
+                        HorizontalAlignment="Center"
+                        Opacity="0.6" />
+                </StackPanel>
+
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Korisničko ime" />
+
+                    <TextBox
+                        x:Name="UsernameTextBox"
+                        PlaceholderText="Korisničko ime" />
+                </StackPanel>
+
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Lozinka" />
+
+                    <TextBox
+                        x:Name="PasswordTextBox"
+                        PasswordChar="●"
+                        PlaceholderText="Lozinka" />
+                </StackPanel>
+
+                <Button
+                    Content="PRIJAVI SE"
+                    Click="LoginButton_Click" />
+
+                <TextBlock
+                    x:Name="ErrorTextBlock"
+                    Foreground="Red"
+                    HorizontalAlignment="Center"
+                    TextWrapping="Wrap" />
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+</UserControl>

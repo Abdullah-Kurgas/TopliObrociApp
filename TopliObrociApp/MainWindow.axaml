@@ -5,5 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TopliObrociApp.MainWindow"
         Title="TopliObrociApp">
-    Welcome to Avalonia!
+    
+    <ContentControl x:Name="MainContent"/>
+    
 </Window>
