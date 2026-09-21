@@ -1,184 +1,75 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Media;
+using TopliObrociApp.Services;
 
 namespace TopliObrociApp.Views;
 
 public partial class TopliObrokView : UserControl
 {
-    private readonly List<TopliObrokReceipt> _receipts = new()
-    {
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 9, 2),
-            ReceiptNumber = "R-10284",
-            ObjectName = "Restoran Central",
-            Amount = 12.00m
-        },
-
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 9, 3),
-            ReceiptNumber = "R-10291",
-            ObjectName = "Bistro Most",
-            Amount = 9.50m
-        },
-
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 9, 4),
-            ReceiptNumber = "R-10305",
-            ObjectName = "Restoran Central",
-            Amount = 11.00m
-        },
-
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 9, 7),
-            ReceiptNumber = "R-10344",
-            ObjectName = "Fast Food 24",
-            Amount = 8.50m
-        },
-
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 9, 9),
-            ReceiptNumber = "R-10381",
-            ObjectName = "Bistro Most",
-            Amount = 10.00m
-        },
-
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 9, 10),
-            ReceiptNumber = "R-10402",
-            ObjectName = "Restoran Central",
-            Amount = 12.00m
-        },
-
-        // Prethodni mjesec
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 8, 3),
-            ReceiptNumber = "R-9811",
-            ObjectName = "Restoran Central",
-            Amount = 11.00m
-        },
-
-        new TopliObrokReceipt
-        {
-            Date = new DateTime(2026, 8, 5),
-            ReceiptNumber = "R-9842",
-            ObjectName = "Bistro Most",
-            Amount = 10.00m
-        }
-    };
-
-    private DateTime _currentMonth = new(2026, 9, 1);
-
+    // Privremeno dok ne spojimo login
+    private const long _idReprezenta = 1087795312;
+    private readonly GarsonService _garsonService = new();
+    private DateTime _currentMonth = new(DateTime.Today.Year, DateTime.Today.Month, 1);
 
     public TopliObrokView()
     {
         InitializeComponent();
+        ToggleLoading(true);
 
-        UpdateScreen();
+        Loaded += async (_, __) => { await UpdateScreen(); };
     }
 
-
-    private void UpdateScreen()
+    private async Task UpdateScreen()
     {
-        MonthNameText.Text =
-            _currentMonth.ToString("MMMM yyyy");
+        ToggleLoading(true);
 
-        var workingDays =
-            CalculateWorkingDays(_currentMonth);
+        try
+        {
+            MonthNameText.Text = _currentMonth.ToString("MMMM yyyy");
 
-        var vacationDays =
-            (int)(VacationInput.Value ?? 0);
+            var workingDays = CalculateWorkingDays(_currentMonth);
+            var absentDays = (int)(AbsentDaysInput.Value ?? 0);
+            var billableDays = Math.Max(0, workingDays - absentDays);
 
-        var workDaysPerWeek =
-            (int)(WorkDaysInput.Value ?? 5);
+            var racuni = await _garsonService.GetRacuniAsync(_currentMonth, _idReprezenta);
+            var total = await _garsonService.GetUkupnoAsync(_currentMonth, _idReprezenta);
+            const decimal iznosPoDanu = 10m;
+            var ukupnoNaRaspolaganju = billableDays * iznosPoDanu;
+            var potroseno = total;
+            var preostalo = ukupnoNaRaspolaganju - potroseno;
+            var procenat = ukupnoNaRaspolaganju > 0 ? potroseno / ukupnoNaRaspolaganju * 100 : 0;
+            var progress = Math.Clamp(procenat, 0, 100);
 
-        /*
-         * Ako korisnik radi 5 dana sedmično,
-         * koristimo standardne pon-pet radne dane.
-         *
-         * Ako radi manje/više dana,
-         * kasnije možemo napraviti precizniji
-         * raspored po danima u sedmici.
-         */
+            WorkingDaysText.Text = workingDays.ToString();
+            VacationDaysText.Text = absentDays.ToString();
+            CalculatedDaysText.Text = billableDays.ToString();
+            AvailableAmountText.Text = $"{ukupnoNaRaspolaganju:N2} KM";
+            SpentAmountText.Text = $"{potroseno:N2} KM";
+            RemainingAmountText.Text = $"{preostalo:N2} KM";
+            UsageSummaryText.Text = $"Potrošeno {potroseno:N2} KM od {ukupnoNaRaspolaganju:N2} KM";
+            UsageProgressBar.Value = (double)progress;
+            ReceiptCountHeaderText.Text = racuni.Count == 1 ? "1 račun" : $"{racuni.Count} računa";
 
-        if (workDaysPerWeek != 5)
-            workingDays =
-                CalculateWorkingDaysForWeek(
-                    _currentMonth,
-                    workDaysPerWeek);
-
-
-        var billableDays =
-            Math.Max(
-                0,
-                workingDays - vacationDays);
-
-
-        // Računi za trenutno izabrani mjesec
-        var monthReceipts =
-            _receipts
-                .Where(x =>
-                    x.Date.Year == _currentMonth.Year &&
-                    x.Date.Month == _currentMonth.Month)
-                .ToList();
-
-
-        var total =
-            monthReceipts.Sum(x => x.Amount);
-
-
-        // UI
-        WorkingDaysText.Text =
-            workingDays.ToString();
-
-        VacationDaysText.Text =
-            $"{vacationDays} dana";
-
-        CalculatedDaysText.Text =
-            billableDays.ToString();
-
-        BillableDaysText.Text =
-            $"{billableDays} obračunatih dana";
-
-        TotalAmountText.Text =
-            $"{total:N2} KM";
-
-        ReceiptCountText.Text =
-            monthReceipts.Count == 1
-                ? "1 račun"
-                : $"{monthReceipts.Count} računa";
-
-
-        ReceiptsGrid.ItemsSource =
-            monthReceipts;
+            ReceiptsGrid.ItemsSource = racuni;
+        }
+        finally
+        {
+            ToggleLoading(false);
+        }
     }
 
 
     private static int CalculateWorkingDays(DateTime month)
     {
         var days = 0;
-
-        var daysInMonth =
-            DateTime.DaysInMonth(
-                month.Year,
-                month.Month);
+        var daysInMonth = DateTime.DaysInMonth(month.Year, month.Month);
 
         for (var i = 1; i <= daysInMonth; i++)
         {
-            var date =
-                new DateTime(
-                    month.Year,
-                    month.Month,
-                    i);
+            var date = new DateTime(month.Year, month.Month, i);
 
             if (date.DayOfWeek != DayOfWeek.Saturday &&
                 date.DayOfWeek != DayOfWeek.Sunday)
@@ -221,81 +112,29 @@ public partial class TopliObrokView : UserControl
         object? sender,
         NumericUpDownValueChangedEventArgs e)
     {
-        UpdateScreen();
+        // UpdateScreen();
     }
 
-
-    private void PreviousMonth_Click(
-        object? sender,
-        RoutedEventArgs e)
+    private void PreviousMonth_Click(object? sender, RoutedEventArgs e)
     {
-        _currentMonth =
-            _currentMonth.AddMonths(-1);
-
-        UpdateScreen();
+        ChangeMonth(-1);
     }
 
 
-    private void NextMonth_Click(
-        object? sender,
-        RoutedEventArgs e)
+    private void NextMonth_Click(object? sender, RoutedEventArgs e)
     {
-        _currentMonth =
-            _currentMonth.AddMonths(1);
-
-        UpdateScreen();
+        ChangeMonth(1);
     }
 
-
-    private void July_Click(
-        object? sender,
-        RoutedEventArgs e)
+    private void ChangeMonth(int months)
     {
-        _currentMonth = new DateTime(2026, 7, 1);
-
-        UpdateScreen();
+        _currentMonth = _currentMonth.AddMonths(months);
+        _ = UpdateScreen();
     }
 
-
-    private void August_Click(
-        object? sender,
-        RoutedEventArgs e)
+    private void ToggleLoading(bool loading)
     {
-        _currentMonth = new DateTime(2026, 8, 1);
-
-        UpdateScreen();
+        ContentGrid.Effect = loading ? new BlurEffect { Radius = 10 } : null;
+        LoadingOverlay.IsVisible = loading;
     }
-
-
-    private void September_Click(
-        object? sender,
-        RoutedEventArgs e)
-    {
-        _currentMonth = new DateTime(2026, 9, 1);
-
-        UpdateScreen();
-    }
-
-
-    private void October_Click(
-        object? sender,
-        RoutedEventArgs e)
-    {
-        _currentMonth = new DateTime(2026, 10, 1);
-
-        UpdateScreen();
-    }
-}
-
-public class TopliObrokReceipt
-{
-    public DateTime Date { get; set; }
-
-    public string ReceiptNumber { get; set; }
-        = string.Empty;
-
-    public string ObjectName { get; set; }
-        = string.Empty;
-
-    public decimal Amount { get; set; }
 }
