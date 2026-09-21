@@ -20,8 +20,4 @@
         <PackageReference Include="FluentIcons.Avalonia" Version="2.1.341"/>
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="11.0.0-rc.1.26425.128"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Models\"/>
-    </ItemGroup>
 </Project>
