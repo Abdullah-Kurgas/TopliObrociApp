@@ -8,6 +8,8 @@
         <entry key="TopliObrociApp/Views/DashboardView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/Views/LoginView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/Views/TopliObrokView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
+        <entry key="TopliObrociApp/Windows/SplashScreen.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
+        <entry key="TopliObrociApp/Windows/StartupWindow.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
       </map>
     </option>
   </component>
