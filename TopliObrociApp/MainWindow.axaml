@@ -4,8 +4,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TopliObrociApp.MainWindow"
-        Title="TopliObrociApp">
-    
-    <ContentControl x:Name="MainContent"/>
-    
+        Title="Topli Obroci"
+        Icon="/Assets/Windows/icon-256x256px.png">
+
+    <ContentControl x:Name="MainContent" />
+
 </Window>

@@ -9,16 +9,16 @@ namespace TopliObrociApp.Views;
 
 public partial class TopliObrokView : UserControl
 {
-    // Privremeno dok ne spojimo login
-    private const long _idReprezenta = 1087795312;
+    private readonly AuthSession _authSession;
     private readonly GarsonService _garsonService = new();
     private DateTime _currentMonth = new(DateTime.Today.Year, DateTime.Today.Month, 1);
 
-    public TopliObrokView()
+    public TopliObrokView(AuthSession authSession)
     {
         InitializeComponent();
         ToggleLoading(true);
 
+        _authSession = authSession;
         Loaded += async (_, __) => { await UpdateScreen(); };
     }
 
@@ -34,8 +34,8 @@ public partial class TopliObrokView : UserControl
             var absentDays = (int)(AbsentDaysInput.Value ?? 0);
             var billableDays = Math.Max(0, workingDays - absentDays);
 
-            var racuni = await _garsonService.GetRacuniAsync(_currentMonth, _idReprezenta);
-            var total = await _garsonService.GetUkupnoAsync(_currentMonth, _idReprezenta);
+            var racuni = await _garsonService.GetRacuniAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
+            var total = await _garsonService.GetUkupnoAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
             const decimal iznosPoDanu = 10m;
             var ukupnoNaRaspolaganju = billableDays * iznosPoDanu;
             var potroseno = total;
@@ -80,37 +80,7 @@ public partial class TopliObrokView : UserControl
     }
 
 
-    private static int CalculateWorkingDaysForWeek(
-        DateTime month,
-        int daysPerWeek)
-    {
-        /*
-         * Za sada jednostavna procjena.
-         *
-         * Kasnije možemo napraviti pravi
-         * raspored radnih dana, npr:
-         *
-         * PON ✓
-         * UTO ✓
-         * SRI ✓
-         * ČET ✓
-         * PET ✓
-         * SUB ✗
-         * NED ✗
-         */
-
-        var standardWorkingDays =
-            CalculateWorkingDays(month);
-
-        return (int)Math.Round(
-            standardWorkingDays *
-            daysPerWeek / 5.0);
-    }
-
-
-    private void Input_ValueChanged(
-        object? sender,
-        NumericUpDownValueChangedEventArgs e)
+    private void Input_ValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
         // UpdateScreen();
     }

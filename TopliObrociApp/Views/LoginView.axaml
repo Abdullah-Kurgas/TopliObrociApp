@@ -2,18 +2,15 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Class="TopliObrociApp.Views.LoginView">
-
     <Grid>
         <Border
             Width="400"
             Padding="35"
-            CornerRadius="12"
+            CornerRadius="16"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Background="{DynamicResource SystemControlBackgroundBaseLowBrush}"
-            BorderBrush="{DynamicResource ThemeBorderLowBrush}">
-
-
+            Background="{DynamicResource SystemChromeMediumColor}"
+            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
             <StackPanel Spacing="15">
                 <StackPanel Margin="0 0 0 15" Spacing="10">
                     <TextBlock
@@ -33,7 +30,10 @@
 
                     <TextBox
                         x:Name="UsernameTextBox"
-                        PlaceholderText="Korisničko ime" />
+                        PlaceholderText="Korisničko ime"
+                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                        Padding="10"
+                        CornerRadius="8" />
                 </StackPanel>
 
                 <StackPanel Spacing="10">
@@ -41,24 +41,30 @@
 
                     <TextBox
                         x:Name="PasswordTextBox"
-                        PasswordChar="●"
-                        PlaceholderText="Lozinka" />
+                        PasswordChar="*"
+                        PlaceholderText="Lozinka"
+                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                        Padding="10"
+                        CornerRadius="8" />
                 </StackPanel>
 
                 <Button
-                    Content="PRIJAVI SE"
+                    x:Name="LoginButton"
+                    Content="Prijavi se"
+                    CornerRadius="8"
+                    Padding="15 8"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Margin="25 10 25 0"
                     Click="LoginButton_Click" />
 
                 <TextBlock
-                    x:Name="ErrorTextBlock"
+                    x:Name="ErrorText"
+                    IsVisible="false"
                     Foreground="Red"
                     HorizontalAlignment="Center"
                     TextWrapping="Wrap" />
-
             </StackPanel>
-
         </Border>
-
     </Grid>
-
 </UserControl>
