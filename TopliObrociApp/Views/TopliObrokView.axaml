@@ -243,10 +243,7 @@
                 </Grid>
             </Border>
 
-            <Border Grid.Row="5"
-                    CornerRadius="16"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+            <Border Grid.Row="5">
                 <Grid RowDefinitions="Auto,*">
                     <Grid
                         Grid.Row="0"
