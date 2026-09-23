@@ -30,7 +30,6 @@ public class App : Application
             }
             catch (Exception e)
             {
-                splashScreen.Close();
                 return;
             }
 

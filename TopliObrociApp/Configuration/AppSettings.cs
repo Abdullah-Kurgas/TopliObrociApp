@@ -11,7 +11,8 @@ public static class AppSettings
     private const string ShareName = "TopliObrociDB";
     private const string FileName = "users.json";
 
-    private static string MacMountPoint => $"/Volumes/{ShareName}";
+    private static string MacMountPoint =>
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ShareName);
 
     public static string UsersFilePath
     {
@@ -19,9 +20,9 @@ public static class AppSettings
         {
             if (OperatingSystem.IsWindows()) return $@"\\{ServerIp}\{ShareName}\{FileName}";
 
-            if (OperatingSystem.IsMacOS()) return Path.Combine(MacMountPoint, FileName);
-
-            throw new PlatformNotSupportedException("Operativni sistem nije podržan.");
+            return OperatingSystem.IsMacOS()
+                ? Path.Combine(MacMountPoint, FileName)
+                : throw new PlatformNotSupportedException("Operativni sistem nije podržan.");
         }
     }
 
@@ -39,7 +40,7 @@ public static class AppSettings
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "/sbin/mount_smbfs",
-                    Arguments = $"//{ServerIp}/{ShareName} \"{MacMountPoint}\"",
+                    Arguments = $"-N //guest@{ServerIp}/{ShareName} \"{MacMountPoint}\"",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
@@ -48,6 +49,7 @@ public static class AppSettings
             };
 
             process.Start();
+
             var error = await process.StandardError.ReadToEndAsync();
             await process.WaitForExitAsync();
 
