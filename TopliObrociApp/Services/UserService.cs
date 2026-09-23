@@ -21,19 +21,12 @@ public class UserService
 
     public List<User> GetUsers()
     {
-        if (!File.Exists(_filePath))
-            throw new FileNotFoundException("users.json nije pronađen.", _filePath);
-
+        if (!File.Exists(_filePath)) throw new FileNotFoundException("users.json nije pronađen.", _filePath);
         var json = File.ReadAllText(_filePath);
 
         if (string.IsNullOrWhiteSpace(json)) return [];
 
         return JsonSerializer.Deserialize<List<User>>(json, _jsonOptions) ?? [];
-    }
-
-    public User? GetUserByUsername(string username)
-    {
-        return GetUsers().FirstOrDefault(x => x.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
     }
 
     public void AddUser(int garsonId, string username, string password, Role role)

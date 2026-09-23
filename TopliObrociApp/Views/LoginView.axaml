@@ -1,70 +1,189 @@
 <UserControl
+    x:Class="TopliObrociApp.Views.LoginView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Class="TopliObrociApp.Views.LoginView">
-    <Grid>
-        <Border
-            Width="400"
-            Padding="35"
-            CornerRadius="16"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="{DynamicResource SystemChromeMediumColor}"
-            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-            <StackPanel Spacing="15">
-                <StackPanel Margin="0 0 0 15" Spacing="10">
-                    <TextBlock
-                        Text="Topli obroci"
-                        FontSize="28"
-                        FontWeight="Bold"
-                        HorizontalAlignment="Center" />
+    xmlns:models="clr-namespace:TopliObrociApp.Models">
+    <Border
+        Width="800"
+        Height="480"
+        Background="{DynamicResource SystemChromeMediumColor}"
+        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+        BorderThickness="1"
+        CornerRadius="16"
+        BoxShadow="0 8 30 0 #20000000"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+        <Grid ColumnDefinitions="350,*">
+            <Border
+                Grid.Column="0"
+                BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                BorderThickness="0,0,1,0"
+                CornerRadius="16,0,0,16">
+
+                <Grid RowDefinitions="Auto,*">
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="20,24,20,12">
+                        <TextBlock
+                            Text="Korisnici"
+                            FontSize="20"
+                            FontWeight="SemiBold" />
+
+                        <TextBlock
+                            Text="Izaberite svoj nalog"
+                            FontSize="13"
+                            Opacity=".5"
+                            Margin="0,4,0,0" />
+                    </StackPanel>
+
+                    <ListBox
+                        x:Name="UsersList"
+                        Grid.Row="1"
+                        SelectionMode="Single"
+                        SelectionChanged="UsersList_SelectionChanged"
+                        Margin="12,0,12,16"
+                        Background="Transparent"
+                        BorderThickness="0">
+
+                        <ListBox.Styles>
+                            <Style Selector="ListBoxItem">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0,1" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="CornerRadius" Value="11" />
+                                <Setter Property="BorderThickness" Value="1" />
+                            </Style>
+
+                            <Style Selector="ListBoxItem:selected">
+                                <Setter Property="Background" Value="black" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource SystemChromeDisabledHighColor}" />
+                            </Style>
+                        </ListBox.Styles>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="models:User">
+                                <Border
+                                    Padding="12"
+                                    CornerRadius="10">
+
+                                    <Grid ColumnDefinitions="42,*">
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="40"
+                                            Height="40"
+                                            CornerRadius="20"
+                                            Background="{DynamicResource SystemChromeLowColor}">
+
+                                            <TextBlock
+                                                Text="{Binding Initial}"
+                                                FontSize="16"
+                                                FontWeight="SemiBold"
+                                                Opacity=".5"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Margin="12,0,0,0"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Text="{Binding FullName}"
+                                                FontSize="14"
+                                                FontWeight="SemiBold" />
+
+                                            <TextBlock
+                                                Text="{Binding Username}"
+                                                FontSize="12"
+                                                Opacity=".4"
+                                                Margin="0,2,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <Grid
+                Grid.Column="1"
+                Margin="55,40"
+                RowDefinitions="*,Auto">
+                <StackPanel
+                    Grid.Row="0"
+                    VerticalAlignment="Center">
+
+                    <Border
+                        x:Name="SelectedUserAvatar"
+                        Width="72"
+                        Height="72"
+                        CornerRadius="36"
+                        Background="{DynamicResource SystemChromeLowColor}"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Name="SelectedUserInitial"
+                            Text="?"
+                            FontSize="26"
+                            FontWeight="SemiBold"
+                            Opacity=".5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
 
                     <TextBlock
-                        Text="Prijavite se da pregledate svoje obroke"
+                        x:Name="SelectedUserName"
+                        Text="Izaberite korisnika"
+                        FontSize="22"
+                        FontWeight="Medium"
                         HorizontalAlignment="Center"
-                        Opacity="0.6" />
+                        Margin="0,18,0,0" />
+
+                    <TextBlock
+                        x:Name="SelectedUserDomain"
+                        Text=""
+                        FontSize="13"
+                        Foreground="#6B7280"
+                        HorizontalAlignment="Center"
+                        Margin="0,4,0,30" />
+
+                    <StackPanel>
+                        <TextBlock
+                            Text="Šifra"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Margin="0,0,0,7" />
+
+                        <TextBox
+                            x:Name="PasswordBox"
+                            PasswordChar="●"
+                            PlaceholderText="Unesite šifru"
+                            Height="44"
+                            FontSize="14"
+                            Padding="12"
+                            CornerRadius="10"
+                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}" />
+                    </StackPanel>
+
+                    <Button
+                        x:Name="LoginButton"
+                        Content="Prijavi se"
+                        CornerRadius="8"
+                        Padding="15 10"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Margin="25,15,25,0"
+                        Click="LoginButton_Click" />
+
+                    <TextBlock
+                        x:Name="ErrorText"
+                        Text=""
+                        Foreground="#DC2626"
+                        FontSize="14"
+                        HorizontalAlignment="Center"
+                        Margin="0,15,0,0" />
                 </StackPanel>
-
-                <StackPanel Spacing="10">
-                    <TextBlock Text="Korisničko ime" />
-
-                    <TextBox
-                        x:Name="UsernameTextBox"
-                        PlaceholderText="Korisničko ime"
-                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
-                        Padding="10"
-                        CornerRadius="8" />
-                </StackPanel>
-
-                <StackPanel Spacing="10">
-                    <TextBlock Text="Lozinka" />
-
-                    <TextBox
-                        x:Name="PasswordTextBox"
-                        PasswordChar="*"
-                        PlaceholderText="Lozinka"
-                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
-                        Padding="10"
-                        CornerRadius="8" />
-                </StackPanel>
-
-                <Button
-                    x:Name="LoginButton"
-                    Content="Prijavi se"
-                    CornerRadius="8"
-                    Padding="15 8"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    Margin="25 10 25 0"
-                    Click="LoginButton_Click" />
-
-                <TextBlock
-                    x:Name="ErrorText"
-                    IsVisible="false"
-                    Foreground="Red"
-                    HorizontalAlignment="Center"
-                    TextWrapping="Wrap" />
-            </StackPanel>
-        </Border>
-    </Grid>
+            </Grid>
+        </Grid>
+    </Border>
 </UserControl>

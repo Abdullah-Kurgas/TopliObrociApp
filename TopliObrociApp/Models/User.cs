@@ -4,15 +4,16 @@ namespace TopliObrociApp.Models;
 
 public class User
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
+    public int GarsonId { get; init; }
+    public string FirstName { get; init; } = string.Empty;
+    public string LastName { get; init; } = string.Empty;
+    public string Username { get; init; } = string.Empty;
+    public string PasswordHash { get; init; } = string.Empty;
+    public string Password { get; init; } = string.Empty;
+    public Role Role { get; init; }
+    public bool IsActive { get; init; }
 
-    public int GarsonId { get; set; }
-
-    public string Username { get; set; } = string.Empty;
-
-    public string PasswordHash { get; set; } = string.Empty;
-
-    public Role Role { get; set; }
-
-    public bool IsActive { get; set; }
+    public string FullName => $"{FirstName} {LastName}";
+    public string Initial => string.IsNullOrEmpty(FirstName) ? "?" : FirstName[0].ToString().ToUpper();
 }
