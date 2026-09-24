@@ -75,7 +75,8 @@
                 <StackPanel Grid.Row="1">
                     <RadioButton Classes="navItem" Content="Topli obrok" Tag="BowlChopsticks" IsChecked="True"
                                  GroupName="MainNav" Click="TopliObrok_Click" />
-                    <RadioButton Classes="navItem" Content="Korisnici" Tag="People" GroupName="MainNav"
+                    <RadioButton x:Name="KorisniciNav" Classes="navItem" Content="Korisnici" Tag="People"
+                                 GroupName="MainNav"
                                  Click="Korisnici_Click" />
                 </StackPanel>
 

@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using TopliObrociApp.Enums;
 using TopliObrociApp.Services;
 
 namespace TopliObrociApp.Views;
@@ -16,6 +17,7 @@ public partial class MainView : UserControl
         _authSession = authSession;
         _navigation = new NavigationService(ContentArea);
 
+        ApplyRolePermissions();
         ShowTopliObrok();
     }
 
@@ -32,5 +34,12 @@ public partial class MainView : UserControl
     private void Korisnici_Click(object? sender, RoutedEventArgs e)
     {
         _navigation.Navigate(new KorisniciView(_authSession));
+    }
+
+    private void ApplyRolePermissions()
+    {
+        var role = _authSession.CurrentUser!.Role;
+
+        KorisniciNav.IsVisible = role == Role.Administrator;
     }
 }
