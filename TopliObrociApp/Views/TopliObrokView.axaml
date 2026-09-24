@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ic="using:FluentIcons.Avalonia">
     <UserControl.Styles>
-
         <Style Selector="NumericUpDown">
             <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Padding" Value="10 10" />
@@ -14,15 +13,9 @@
     </UserControl.Styles>
 
     <Grid>
-        <Grid
-            x:Name="ContentGrid"
-            MaxWidth="800"
-            Margin="24"
-            RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
-            RowSpacing="16">
+        <Grid RowDefinitions="Auto, *" RowSpacing="20" Margin="24">
             <Grid
                 Grid.Row="0"
-                Margin="0 0 0 10"
                 ColumnDefinitions="Auto,*,Auto">
                 <Button
                     Grid.Column="0"
@@ -69,227 +62,235 @@
                 </Button>
             </Grid>
 
-            <Border
-                Grid.Row="1"
-                Padding="20"
-                CornerRadius="16"
-                BorderThickness="1"
-                Background="{DynamicResource SystemChromeMediumColor}"
-                BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                <StackPanel Spacing="13">
-                    <StackPanel Spacing="5">
-                        <TextBlock
-                            Text="Preostalo za potrošiti"
-                            Opacity="0.56" />
+            <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="20">
+                <Grid
+                    x:Name="ContentGrid"
+                    RowDefinitions="Auto,Auto,Auto,*"
+                    RowSpacing="16">
 
-                        <TextBlock
-                            x:Name="RemainingAmountText"
-                            Text="0,00 KM"
-                            FontSize="32"
-                            FontWeight="Bold" />
-                    </StackPanel>
-
-                    <TextBlock
-                        x:Name="UsageSummaryText"
-                        Text="Potrošeno 0,00 KM od 0,00 KM"
-                        Opacity="0.56" />
-
-                    <ProgressBar
-                        x:Name="UsageProgressBar"
-                        Minimum="0"
-                        Maximum="100"
-                        Height="7"
-                        IsIndeterminate="False" />
-                </StackPanel>
-            </Border>
-
-            <Grid
-                Grid.Row="2"
-                ColumnDefinitions="*,*"
-                ColumnSpacing="12">
-                <Border
-                    Grid.Column="0"
-                    Padding="16"
-                    CornerRadius="14"
-                    BorderThickness="1"
-                    Background="{DynamicResource SystemChromeMediumColor}"
-                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                    <StackPanel Spacing="5">
-                        <TextBlock
-                            Text="Na raspolaganju"
-                            Opacity="0.56" />
-
-                        <TextBlock
-                            x:Name="AvailableAmountText"
-                            Text="0,00 KM"
-                            FontSize="20"
-                            FontWeight="Medium" />
-                    </StackPanel>
-                </Border>
-
-                <Border
-                    Grid.Column="1"
-                    Padding="16"
-                    CornerRadius="14"
-                    BorderThickness="1"
-                    Background="{DynamicResource SystemChromeMediumColor}"
-                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                    <StackPanel Spacing="5">
-                        <TextBlock
-                            Text="Potrošeno"
-                            Opacity="0.56" />
-
-                        <TextBlock
-                            x:Name="SpentAmountText"
-                            Text="0,00 KM"
-                            FontSize="20"
-                            FontWeight="Medium" />
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-            <Border
-                Grid.Row="3"
-                Padding="16"
-                CornerRadius="14"
-                BorderThickness="1"
-                Background="{DynamicResource SystemChromeMediumColor}"
-                BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                <Grid ColumnDefinitions="*,*,*">
-                    <StackPanel
-                        Grid.Column="0"
-                        HorizontalAlignment="Center"
-                        Spacing="6">
-                        <TextBlock
-                            Text="Radnih dana"
-                            FontSize="13"
-                            Opacity="0.56"
-                            HorizontalAlignment="Center" />
-
-                        <TextBlock
-                            x:Name="WorkingDaysText"
-                            Text="22"
-                            FontSize="19"
-                            FontWeight="Medium"
-                            HorizontalAlignment="Center" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        Spacing="6">
-                        <TextBlock
-                            Text="Izostali dani"
-                            FontSize="13"
-                            Opacity="0.56"
-                            HorizontalAlignment="Center" />
-
-                        <TextBlock
-                            x:Name="VacationDaysText"
-                            Text="0"
-                            FontSize="19"
-                            FontWeight="Medium"
-                            HorizontalAlignment="Center" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        Spacing="6">
-                        <TextBlock
-                            Text="Dani obračuna"
-                            FontSize="13"
-                            Opacity="0.56"
-                            HorizontalAlignment="Center" />
-
-                        <TextBlock
-                            x:Name="CalculatedDaysText"
-                            Text="22"
-                            FontSize="19"
-                            FontWeight="Medium"
-                            HorizontalAlignment="Center" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-            <Border Grid.Row="4"
-                    Padding="16"
-                    CornerRadius="14"
-                    BorderThickness="1"
-                    Background="{DynamicResource SystemChromeMediumColor}"
-                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                <Grid ColumnDefinitions="*,110">
-                    <Grid RowDefinitions="*, Auto">
-                        <TextBlock
-                            Text="Izostali dani"
-                            FontSize="16"
-                            FontWeight="Medium" />
-
-                        <TextBlock Grid.Row="1"
-                                   Text="Unesi broj dana u kojima nisi koristio pravo"
-                                   FontSize="13"
-                                   Opacity="0.56" />
-                    </Grid>
-
-                    <NumericUpDown
-                        x:Name="AbsentDaysInput"
-                        Grid.Column="1"
-                        Value="0"
-                        Minimum="0"
-                        Maximum="31"
-                        Increment="1"
-                        ShowButtonSpinner="False"
-                        ValueChanged="Input_ValueChanged" />
-                </Grid>
-            </Border>
-
-            <Border Grid.Row="5">
-                <Grid RowDefinitions="Auto,*">
-                    <Grid
+                    <Border
                         Grid.Row="0"
-                        Margin="16 16 16 10"
-                        ColumnDefinitions="*,Auto">
-                        <TextBlock
-                            Text="Potrošnja po računima"
-                            FontSize="16"
-                            FontWeight="Medium" />
+                        Padding="20"
+                        CornerRadius="16"
+                        BorderThickness="1"
+                        Background="{DynamicResource SystemChromeMediumColor}"
+                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                        <StackPanel Spacing="13">
+                            <StackPanel Spacing="5">
+                                <TextBlock
+                                    Text="Preostalo za potrošiti"
+                                    Opacity="0.56" />
 
-                        <TextBlock
-                            x:Name="ReceiptCountHeaderText"
+                                <TextBlock
+                                    x:Name="RemainingAmountText"
+                                    Text="0,00 KM"
+                                    FontSize="32"
+                                    FontWeight="Bold" />
+                            </StackPanel>
+
+                            <TextBlock
+                                x:Name="UsageSummaryText"
+                                Text="Potrošeno 0,00 KM od 0,00 KM"
+                                Opacity="0.56" />
+
+                            <ProgressBar
+                                x:Name="UsageProgressBar"
+                                Minimum="0"
+                                Maximum="100"
+                                Height="7"
+                                IsIndeterminate="False" />
+                        </StackPanel>
+                    </Border>
+
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="12">
+                        <Border
+                            Grid.Column="0"
+                            Padding="16"
+                            CornerRadius="14"
+                            BorderThickness="1"
+                            Background="{DynamicResource SystemChromeMediumColor}"
+                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                            <StackPanel Spacing="5">
+                                <TextBlock
+                                    Text="Na raspolaganju"
+                                    Opacity="0.56" />
+
+                                <TextBlock
+                                    x:Name="AvailableAmountText"
+                                    Text="0,00 KM"
+                                    FontSize="20"
+                                    FontWeight="Medium" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border
                             Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Opacity="0.7" />
+                            Padding="16"
+                            CornerRadius="14"
+                            BorderThickness="1"
+                            Background="{DynamicResource SystemChromeMediumColor}"
+                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                            <StackPanel Spacing="5">
+                                <TextBlock
+                                    Text="Potrošeno"
+                                    Opacity="0.56" />
+
+                                <TextBlock
+                                    x:Name="SpentAmountText"
+                                    Text="0,00 KM"
+                                    FontSize="20"
+                                    FontWeight="Medium" />
+                            </StackPanel>
+                        </Border>
                     </Grid>
 
-                    <DataGrid
-                        x:Name="ReceiptsGrid"
-                        Grid.Row="1"
-                        AutoGenerateColumns="False"
-                        IsReadOnly="True"
-                        CanUserReorderColumns="False"
-                        x:CompileBindings="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
-                                Header="Datum"
-                                Width="150"
-                                Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}" />
+                    <Border Grid.Row="2"
+                            Padding="16"
+                            CornerRadius="14"
+                            BorderThickness="1"
+                            Background="{DynamicResource SystemChromeMediumColor}"
+                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                        <Grid ColumnDefinitions="*,110">
+                            <Grid RowDefinitions="*, Auto">
+                                <TextBlock
+                                    Text="Izostali dani"
+                                    FontSize="16"
+                                    FontWeight="Medium" />
 
-                            <DataGridTextColumn
-                                Header="Opis"
-                                Width="*"
-                                Binding="{Binding Opis}" />
+                                <TextBlock Grid.Row="1"
+                                           Text="Unesi broj dana u kojima nisi koristio pravo"
+                                           FontSize="13"
+                                           Opacity="0.56" />
+                            </Grid>
 
-                            <DataGridTextColumn
-                                Header="Iznos"
-                                Width="150"
-                                Binding="{Binding Iznos, StringFormat={}{0:N2} KM}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <NumericUpDown
+                                x:Name="AbsentDaysInput"
+                                Grid.Column="1"
+                                Value="0"
+                                Minimum="0"
+                                Maximum="31"
+                                Increment="1"
+                                ShowButtonSpinner="False"
+                                ValueChanged="Input_ValueChanged" />
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="3">
+                        <Grid RowDefinitions="Auto,*">
+                            <Grid
+                                Grid.Row="0"
+                                ColumnDefinitions="*,Auto"
+                                Margin="0 16 0 10">
+                                <TextBlock
+                                    Text="Potrošnja po računima"
+                                    FontSize="16"
+                                    FontWeight="Medium" />
+
+                                <TextBlock
+                                    x:Name="ReceiptCountHeaderText"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Opacity="0.7" />
+                            </Grid>
+
+                            <DataGrid
+                                x:Name="ReceiptsGrid"
+                                Grid.Row="1"
+                                AutoGenerateColumns="False"
+                                IsReadOnly="True"
+                                CanUserReorderColumns="False"
+                                x:CompileBindings="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Datum"
+                                        Width="150"
+                                        Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}" />
+
+                                    <DataGridTextColumn
+                                        Header="Opis"
+                                        Width="*"
+                                        Binding="{Binding Opis}" />
+
+                                    <DataGridTextColumn
+                                        Header="Iznos"
+                                        Width="150"
+                                        Binding="{Binding Iznos, StringFormat={}{0:N2} KM}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
                 </Grid>
-            </Border>
+
+                <StackPanel Grid.Column="1" Spacing="20">
+                    <Border
+                        Padding="16"
+                        CornerRadius="14"
+                        BorderThickness="1"
+                        Background="{DynamicResource SystemChromeMediumColor}"
+                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="28">
+                            <StackPanel
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                Spacing="6">
+                                <TextBlock
+                                    Text="Radnih dana"
+                                    FontSize="13"
+                                    Opacity="0.56"
+                                    HorizontalAlignment="Center" />
+
+                                <TextBlock
+                                    x:Name="WorkingDaysText"
+                                    Text="22"
+                                    FontSize="19"
+                                    FontWeight="Medium"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                Spacing="6">
+                                <TextBlock
+                                    Text="Izostali dani"
+                                    FontSize="13"
+                                    Opacity="0.56"
+                                    HorizontalAlignment="Center" />
+
+                                <TextBlock
+                                    x:Name="VacationDaysText"
+                                    Text="0"
+                                    FontSize="19"
+                                    FontWeight="Medium"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Row="2"
+                                HorizontalAlignment="Center"
+                                Spacing="6">
+                                <TextBlock
+                                    Text="Dani obračuna"
+                                    FontSize="13"
+                                    Opacity="0.56"
+                                    HorizontalAlignment="Center" />
+
+                                <TextBlock
+                                    x:Name="CalculatedDaysText"
+                                    Text="22"
+                                    FontSize="19"
+                                    FontWeight="Medium"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
         </Grid>
 
-        <!-- Overlay Loader  -->
         <Border
             x:Name="LoadingOverlay"
             ZIndex="100"
@@ -309,5 +310,4 @@
             </StackPanel>
         </Border>
     </Grid>
-
 </UserControl>

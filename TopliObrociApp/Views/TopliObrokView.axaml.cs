@@ -36,7 +36,7 @@ public partial class TopliObrokView : UserControl
 
             var racuni = await _garsonService.GetRacuniAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
             var total = await _garsonService.GetUkupnoAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
-            const decimal iznosPoDanu = 10m;
+            const decimal iznosPoDanu = 10;
             var ukupnoNaRaspolaganju = billableDays * iznosPoDanu;
             var potroseno = total;
             var preostalo = ukupnoNaRaspolaganju - potroseno;

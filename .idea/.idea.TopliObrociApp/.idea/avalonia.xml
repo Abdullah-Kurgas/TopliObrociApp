@@ -6,7 +6,9 @@
         <entry key="TopliObrociApp/App.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/MainWindow.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/Views/DashboardView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
+        <entry key="TopliObrociApp/Views/KorisniciView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/Views/LoginView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
+        <entry key="TopliObrociApp/Views/MainView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/Views/TopliObrokView.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/Windows/SplashScreen.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />
         <entry key="TopliObrociApp/Windows/StartupWindow.axaml" value="TopliObrociApp/TopliObrociApp.csproj" />

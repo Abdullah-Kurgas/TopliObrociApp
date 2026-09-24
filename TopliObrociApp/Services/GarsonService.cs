@@ -14,11 +14,7 @@ public class GarsonService
 
     public async Task<List<RReprezentiKartice>> GetRacuniAsync(DateTime mjesec, long idReprezenta)
     {
-        var pocetak = new DateTime(
-            mjesec.Year,
-            mjesec.Month,
-            1);
-
+        var pocetak = new DateTime(mjesec.Year, mjesec.Month, 1);
         var kraj = pocetak.AddMonths(1);
 
         return await _dbContext.R_REPREZENTI_KARTICE
@@ -34,11 +30,7 @@ public class GarsonService
 
     public async Task<decimal> GetUkupnoAsync(DateTime mjesec, long idReprezenta)
     {
-        var pocetak = new DateTime(
-            mjesec.Year,
-            mjesec.Month,
-            1);
-
+        var pocetak = new DateTime(mjesec.Year, mjesec.Month, 1);
         var kraj = pocetak.AddMonths(1);
 
         return await _dbContext.R_REPREZENTI_KARTICE

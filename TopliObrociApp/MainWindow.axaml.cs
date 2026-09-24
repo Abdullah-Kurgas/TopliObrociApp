@@ -21,11 +21,11 @@ public partial class MainWindow : Window
 
     private void ShowLogin()
     {
-        _navigation.Navigate(new LoginView(_authSession, ShowTopliObrokView));
+        _navigation.Navigate(new LoginView(_authSession, ShowMainView));
     }
 
-    private void ShowTopliObrokView()
+    private void ShowMainView()
     {
-        _navigation.Navigate(new TopliObrokView(_authSession));
+        _navigation.Navigate(new MainView(_authSession));
     }
 }
