@@ -29,17 +29,17 @@
         </Style>
 
         <Style Selector="RadioButton.navItem:pointerover /template/ Border">
-            <Setter Property="Background" Value="#F4F4F5" />
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
         </Style>
         <Style Selector="RadioButton.navItem:pointerover">
-            <Setter Property="Foreground" Value="#09090B" />
+            <Setter Property="Foreground" Value="#E4E4E7" />
         </Style>
 
         <Style Selector="RadioButton.navItem:checked /template/ Border">
-            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
         </Style>
         <Style Selector="RadioButton.navItem:checked">
-            <Setter Property="Foreground" Value="#09090B" />
+            <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundPressed}" />
         </Style>
 
         <Style Selector="Button.actionItem">
@@ -58,7 +58,7 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid ColumnDefinitions="220,*" ColumnSpacing="10">
+    <Grid ColumnDefinitions="220,*">
         <Border Grid.Column="0" HorizontalAlignment="Stretch" Padding="15">
             <Grid RowDefinitions="Auto, *, Auto">
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,32,0,32" Spacing="12"

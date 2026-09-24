@@ -13,7 +13,7 @@
         BoxShadow="0 8 30 0 #20000000"
         HorizontalAlignment="Center"
         VerticalAlignment="Center">
-        <Grid ColumnDefinitions="350,*">
+        <Grid ColumnDefinitions="280,*">
             <Border
                 Grid.Column="0"
                 BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
@@ -97,23 +97,22 @@
 
             <Grid
                 Grid.Column="1"
-                Margin="55,40"
+                Margin="75,40"
                 RowDefinitions="*,Auto">
                 <StackPanel
                     Grid.Row="0"
                     VerticalAlignment="Center">
-
                     <Border
                         x:Name="SelectedUserAvatar"
-                        Width="75"
-                        Height="75"
+                        Width="95"
+                        Height="95"
                         CornerRadius="36"
                         Background="{DynamicResource SystemChromeLowColor}"
                         HorizontalAlignment="Center">
                         <TextBlock
                             x:Name="SelectedUserInitial"
                             Text="?"
-                            FontSize="26"
+                            FontSize="30"
                             FontWeight="SemiBold"
                             Opacity=".5"
                             HorizontalAlignment="Center"
@@ -134,15 +133,9 @@
                         FontSize="13"
                         Foreground="#6B7280"
                         HorizontalAlignment="Center"
-                        Margin="0,4,0,30" />
+                        Margin="0,4,0,40" />
 
                     <StackPanel>
-                        <TextBlock
-                            Text="Šifra"
-                            FontSize="14"
-                            FontWeight="SemiBold"
-                            Margin="0,0,0,7" />
-
                         <TextBox
                             x:Name="PasswordBox"
                             PasswordChar="●"
