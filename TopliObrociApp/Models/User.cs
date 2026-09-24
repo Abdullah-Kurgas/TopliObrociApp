@@ -10,7 +10,6 @@ public class User
     public string LastName { get; init; } = string.Empty;
     public string Username { get; init; } = string.Empty;
     public string PasswordHash { get; init; } = string.Empty;
-    public string Password { get; init; } = string.Empty;
     public Role Role { get; init; }
     public bool IsActive { get; init; }
 

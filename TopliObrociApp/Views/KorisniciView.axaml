@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TopliObrociApp.Views.KorisniciView">
+    <Grid RowDefinitions="Auto, Auto, *" Margin="24" RowSpacing="15">
+        <Grid ColumnDefinitions="*, Auto" Margin="0 0 0 10">
+            <StackPanel
+                Spacing="4">
+                <TextBlock
+                    Text="Korisnici"
+                    FontSize="20"
+                    FontWeight="Medium" />
+
+                <TextBlock
+                    Text="Upravljanje korisničkim računima"
+                    Opacity="0.56" />
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="Novi Korisnik"
+                    Padding="17 12" CornerRadius="10" />
+        </Grid>
+
+        <StackPanel Grid.Row="1">
+            <TextBox PlaceholderText="Pretrazi korisnike..."
+                     HorizontalAlignment="Left"
+                     BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                     BorderThickness="1"
+                     CornerRadius="10"
+                     Padding="12 10"
+                     Width="350" />
+        </StackPanel>
+
+        <Border Grid.Row="2">
+            <DataGrid
+                x:Name="UsersDataGrid"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                CanUserReorderColumns="False"
+                x:CompileBindings="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Header="Garson ID"
+                        Width="150"
+                        Binding="{Binding GarsonId}" />
+
+                    <DataGridTextColumn
+                        Header="Ime i Prezime"
+                        Width="*"
+                        Binding="{Binding FullName}" />
+
+                    <DataGridTextColumn
+                        Header="Rola"
+                        Binding="{Binding Role}" />
+
+                    <DataGridTextColumn
+                        Header="Aktivan"
+                        Binding="{Binding IsActive}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>
