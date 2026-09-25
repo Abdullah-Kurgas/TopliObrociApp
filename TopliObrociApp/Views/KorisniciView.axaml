@@ -19,7 +19,7 @@
             </StackPanel>
 
             <Button Grid.Column="1" Content="Novi Korisnik"
-                    Padding="17 12" CornerRadius="10" />
+                    Padding="17 12" CornerRadius="10" Click="NewUser_Click" />
         </Grid>
 
         <StackPanel Grid.Row="1">

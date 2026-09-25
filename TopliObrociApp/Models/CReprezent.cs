@@ -12,4 +12,9 @@ public class CReprezent
     [Column("IME")] public string Ime { get; init; } = string.Empty;
 
     [Column("AKTIVAN")] public int Aktivan { get; init; }
+
+    public override string ToString()
+    {
+        return Ime;
+    }
 }

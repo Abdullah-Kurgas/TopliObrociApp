@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using TopliObrociApp.Configuration;
-using TopliObrociApp.Enums;
 using TopliObrociApp.Models;
 
 namespace TopliObrociApp.Services;
@@ -29,32 +29,34 @@ public class UserService
         return JsonSerializer.Deserialize<List<User>>(json, _jsonOptions) ?? [];
     }
 
-    public void AddUser(int garsonId, string username, string password, Role role)
+    public async Task AddUserAsync(User user)
     {
         var users = GetUsers();
 
-        if (users.Any(x => x.Username.Equals(username, StringComparison.OrdinalIgnoreCase)))
-            throw new InvalidOperationException("Korisnik sa tim username-om već postoji.");
+        if (users.Any(x => x.Username.Equals(user.Username, StringComparison.OrdinalIgnoreCase)))
+            throw new InvalidOperationException($"Korisnik '{user.Username}' već postoji.");
 
-        var newId = users.Count == 0 ? 1 : users.Max(x => x.Id) + 1;
+        var nextId = users.Count == 0 ? 1 : users.Max(x => x.Id) + 1;
 
-        var user = new User
+        var newUser = new User
         {
-            Id = newId,
-            GarsonId = garsonId,
-            Username = username,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
-            Role = Role.Administrator,
-            IsActive = true
+            Id = nextId,
+            GarsonId = user.GarsonId,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Username = user.Username,
+            PasswordHash = user.PasswordHash,
+            Role = user.Role,
+            IsActive = user.IsActive
         };
 
-        users.Add(user);
-        SaveUsers(users);
+        users.Add(newUser);
+        await SaveUsersAsync(users);
     }
 
-    private void SaveUsers(List<User> users)
+    private async Task SaveUsersAsync(List<User> users)
     {
         var json = JsonSerializer.Serialize(users, _jsonOptions);
-        File.WriteAllText(_filePath, json);
+        await File.WriteAllTextAsync(_filePath, json);
     }
 }

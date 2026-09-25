@@ -42,4 +42,12 @@ public class GarsonService
                 x.Storno == 0)
             .SumAsync(x => x.Iznos ?? 0);
     }
+
+    public Task<List<CReprezent>> GetReprezenteByNameAsync(string search)
+    {
+        return Task.FromResult(_dbContext.C_REPREZENTI
+            .Where(x => EF.Functions.Like(x.Ime.ToLower(), $"%{search}%") && x.Aktivan == 1)
+            .Take(10)
+            .ToList());
+    }
 }

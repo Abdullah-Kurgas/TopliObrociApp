@@ -1,0 +1,115 @@
+<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="TopliObrociApp.Windows.AddEditUser"
+    Width="520"
+    Height="600"
+    WindowStartupLocation="CenterOwner"
+    CanResize="False"
+    Title="Upravljanje Korisnik">
+    <Window.Styles>
+        <Style Selector="TextBox,AutoCompleteBox">
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemChromeDisabledHighColor}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="12 10" />
+        </Style>
+    </Window.Styles>
+
+    <Border Padding="30">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*"
+              RowSpacing="16">
+            <TextBlock
+                Grid.Row="0"
+                x:Name="Naslov"
+                FontSize="24"
+                FontWeight="SemiBold" />
+
+            <StackPanel Grid.Row="1" Spacing="6">
+                <TextBlock Text="Ime" />
+
+                <AutoCompleteBox
+                    x:Name="ReprezentAutoComplete"
+                    PlaceholderText="Pretraži zaposlenika..."
+                    FilterMode="None"
+                    TextChanged="ReprezentAutoComplete_OnTextChanged" />
+            </StackPanel>
+
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <StackPanel Grid.Column="0" Spacing="6">
+                    <TextBlock Text="Ime" />
+                    <TextBox
+                        x:Name="FirstNameTextBox" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="6">
+                    <TextBlock Text="Prezime" />
+                    <TextBox
+                        x:Name="LastNameTextBox" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="3"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <StackPanel Grid.Column="0" Spacing="6">
+                    <TextBlock Text="Garson ID" />
+                    <TextBox
+                        x:Name="GarsonIdTextBox"
+                        IsReadOnly="True"
+                        IsEnabled="False" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="6">
+                    <TextBlock Text="Korisničko ime" />
+                    <TextBox
+                        x:Name="UsernameTextBox" />
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Grid.Row="4" Spacing="6">
+                <TextBlock Text="Lozinka" />
+
+                <TextBox
+                    x:Name="PasswordTextBox"
+                    PasswordChar="●"
+                    PlaceholderText="Unesite lozinku" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="5" Spacing="6">
+                <TextBlock Text="Uloga" />
+                <ComboBox x:Name="RoleComboBox" MinWidth="250"
+                          BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                    <ComboBoxItem Content="Administrator" />
+                    <ComboBoxItem Content="Korisnik" />
+                </ComboBox>
+            </StackPanel>
+
+            <CheckBox
+                Grid.Row="6"
+                x:Name="IsActiveCheckBox"
+                Content="Korisnik je aktivan"
+                IsChecked="True" />
+
+            <StackPanel
+                Grid.Row="6"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Spacing="10">
+                <Button
+                    Content="Odustani"
+                    Click="Cancel_Click"
+                    Padding="20,10"
+                    CornerRadius="10" />
+
+                <Button
+                    Content="Sačuvaj"
+                    Click="Save_Click"
+                    Padding="20,10"
+                    CornerRadius="10" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
