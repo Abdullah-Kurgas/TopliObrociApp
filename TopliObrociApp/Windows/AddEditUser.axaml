@@ -69,13 +69,22 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel Grid.Row="4" Spacing="6">
-                <TextBlock Text="Lozinka" />
+            <StackPanel Grid.Row="4" Spacing="3">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Lozinka" />
 
-                <TextBox
-                    x:Name="PasswordTextBox"
-                    PasswordChar="●"
-                    PlaceholderText="Unesite lozinku" />
+                    <TextBox
+                        x:Name="PasswordTextBox"
+                        PasswordChar="●"
+                        PlaceholderText="Unesite lozinku"
+                        IsEnabled="False" />
+                </StackPanel>
+
+                <CheckBox
+                    x:Name="IgnorePassword"
+                    Content="Iskljuci sifru"
+                    IsChecked="True"
+                    IsCheckedChanged="IgnorePasswordCheckedChanged" />
             </StackPanel>
 
             <StackPanel Grid.Row="5" Spacing="6">

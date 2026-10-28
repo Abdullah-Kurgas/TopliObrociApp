@@ -1,23 +1,37 @@
+using System.Threading.Tasks;
 using TopliObrociApp.Models;
 
 namespace TopliObrociApp.Services;
 
 public class AuthSession
 {
-    private User? _currentUser { get; set; }
+    private readonly AuthSessionStorage _storage = new();
 
-    public User? CurrentUser => _currentUser;
+    public User? CurrentUser { get; private set; }
 
-    public bool IsAuthenticated =>
-        _currentUser != null;
+    public bool IsAuthenticated => CurrentUser != null;
 
-    public void SetUser(User user)
+    public async Task SetUserAsync(User user)
     {
-        _currentUser = user;
+        CurrentUser = user;
+
+        await _storage.SaveSessionAsync(user);
     }
 
-    public void Logout()
+    public async Task<bool> RestoreSessionAsync()
     {
-        _currentUser = null;
+        var user = await _storage.LoadSessionAsync();
+
+        if (user == null) return false;
+
+        CurrentUser = user;
+        return true;
+    }
+
+    public async Task LogoutAsync()
+    {
+        CurrentUser = null;
+
+        await _storage.ClearSessionAsync();
     }
 }

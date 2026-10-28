@@ -13,7 +13,7 @@
     </UserControl.Styles>
 
     <Grid>
-        <Grid RowDefinitions="Auto, *" RowSpacing="20" Margin="24">
+        <Grid RowDefinitions="Auto, Auto, *" RowSpacing="20" Margin="24">
             <Grid
                 Grid.Row="0" ColumnDefinitions="Auto,300,Auto" HorizontalAlignment="Center" ColumnSpacing="60">
                 <Button
@@ -64,7 +64,7 @@
             <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="15">
                 <Grid
                     x:Name="ContentGrid"
-                    RowDefinitions="Auto,Auto,Auto,*"
+                    RowDefinitions="Auto,Auto,Auto"
                     RowSpacing="16">
 
                     <Border
@@ -176,51 +176,6 @@
                                 ValueChanged="Input_ValueChanged" />
                         </Grid>
                     </Border>
-
-                    <Border Grid.Row="3">
-                        <Grid RowDefinitions="Auto,*">
-                            <Grid
-                                Grid.Row="0"
-                                ColumnDefinitions="*,Auto"
-                                Margin="0 16 0 10">
-                                <TextBlock
-                                    Text="Potrošnja po računima"
-                                    FontSize="16"
-                                    FontWeight="Medium" />
-
-                                <TextBlock
-                                    x:Name="ReceiptCountHeaderText"
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    Opacity="0.7" />
-                            </Grid>
-
-                            <DataGrid
-                                x:Name="ReceiptsGrid"
-                                Grid.Row="1"
-                                AutoGenerateColumns="False"
-                                IsReadOnly="True"
-                                CanUserReorderColumns="False"
-                                x:CompileBindings="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn
-                                        Header="Datum"
-                                        Width="150"
-                                        Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}" />
-
-                                    <DataGridTextColumn
-                                        Header="Opis"
-                                        Width="*"
-                                        Binding="{Binding Opis}" />
-
-                                    <DataGridTextColumn
-                                        Header="Iznos"
-                                        Width="150"
-                                        Binding="{Binding Iznos, StringFormat={}{0:N2} KM}" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                    </Border>
                 </Grid>
 
                 <StackPanel Grid.Column="1" Spacing="25">
@@ -288,6 +243,51 @@
                     </Border>
                 </StackPanel>
             </Grid>
+
+            <Border Grid.Row="2">
+                <Grid RowDefinitions="Auto,*">
+                    <Grid
+                        Grid.Row="0"
+                        ColumnDefinitions="*,Auto"
+                        Margin="0 0 0 10">
+                        <TextBlock
+                            Text="Potrošnja po računima"
+                            FontSize="16"
+                            FontWeight="Medium" />
+
+                        <TextBlock
+                            x:Name="ReceiptCountHeaderText"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Opacity="0.7" />
+                    </Grid>
+
+                    <DataGrid
+                        x:Name="ReceiptsGrid"
+                        Grid.Row="1"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        CanUserReorderColumns="False"
+                        x:CompileBindings="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Header="Datum"
+                                Width="150"
+                                Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}" />
+
+                            <DataGridTextColumn
+                                Header="Opis"
+                                Width="*"
+                                Binding="{Binding Opis}" />
+
+                            <DataGridTextColumn
+                                Header="Iznos"
+                                Width="150"
+                                Binding="{Binding Iznos, StringFormat={}{0:N2} KM}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
         </Grid>
 
         <Border

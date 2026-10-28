@@ -25,7 +25,7 @@ public class App : Application
             try
             {
                 var mounted = await AppSettings.EnsureUsersShareMountedAsync();
-
+                Console.Write(mounted);
                 if (!mounted) throw new Exception("Nije dohvacena putanja ka users.json");
             }
             catch (Exception e)

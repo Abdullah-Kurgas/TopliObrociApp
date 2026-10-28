@@ -135,17 +135,16 @@
                         HorizontalAlignment="Center"
                         Margin="0,4,0,40" />
 
-                    <StackPanel>
-                        <TextBox
-                            x:Name="PasswordBox"
-                            PasswordChar="●"
-                            PlaceholderText="Unesite šifru"
-                            Height="44"
-                            FontSize="14"
-                            Padding="12"
-                            CornerRadius="10"
-                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}" />
-                    </StackPanel>
+                    <TextBox
+                        x:Name="PasswordBox"
+                        PasswordChar="●"
+                        PlaceholderText="Unesite šifru"
+                        Height="44"
+                        FontSize="14"
+                        Padding="12"
+                        CornerRadius="10"
+                        IsVisible="False"
+                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}" />
 
                     <Button
                         x:Name="LoginButton"

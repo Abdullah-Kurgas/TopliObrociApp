@@ -16,7 +16,17 @@ public partial class MainWindow : Window
         _authSession = new AuthSession();
         _navigation = new NavigationService(MainContent);
 
-        ShowLogin();
+        OpenApplicationAsync();
+    }
+
+    private async void OpenApplicationAsync()
+    {
+        var restored = await _authSession.RestoreSessionAsync();
+
+        if (restored)
+            ShowMainView();
+        else
+            ShowLogin();
     }
 
     private void ShowLogin()

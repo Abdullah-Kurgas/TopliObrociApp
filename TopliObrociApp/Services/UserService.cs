@@ -46,6 +46,7 @@ public class UserService
             LastName = user.LastName,
             Username = user.Username,
             PasswordHash = user.PasswordHash,
+            IgnorePassword = user.IgnorePassword,
             Role = user.Role,
             IsActive = user.IsActive
         };

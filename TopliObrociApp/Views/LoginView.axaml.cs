@@ -13,9 +13,12 @@ public partial class LoginView : UserControl
     private readonly AuthSession _authSession;
     private readonly Action _onLoginSuccess;
     private readonly UserService _userService = new();
+
     private User? _selectedUser;
 
-    public LoginView(AuthSession authSession, Action showDashboard)
+    public LoginView(
+        AuthSession authSession,
+        Action showDashboard)
     {
         InitializeComponent();
 
@@ -30,24 +33,37 @@ public partial class LoginView : UserControl
         var users = _userService.GetUsers();
 
         UsersList.ItemsSource = users;
+
         if (users.Count != 0) UsersList.SelectedIndex = 0;
     }
 
-    private void UsersList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void UsersList_SelectionChanged(
+        object? sender,
+        SelectionChangedEventArgs e)
     {
         _selectedUser = UsersList.SelectedItem as User;
-        if (_selectedUser == null) return;
+
+        if (_selectedUser == null)
+            return;
 
         SelectedUserName.Text = _selectedUser.FullName;
         SelectedUserInitial.Text = _selectedUser.Initial;
+
         PasswordBox.Text = string.Empty;
+
+        PasswordBox.IsVisible = !_selectedUser.IgnorePassword;
+
         ErrorText.Text = string.Empty;
+
         PasswordBox.Focus();
     }
 
-    private void LoginButton_Click(object? sender, RoutedEventArgs e)
+    private async void LoginButton_Click(
+        object? sender,
+        RoutedEventArgs e)
     {
         var password = PasswordBox.Text ?? "";
+
         ErrorText.Text = string.Empty;
 
         if (_selectedUser == null)
@@ -56,13 +72,19 @@ public partial class LoginView : UserControl
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(password))
+        // Only require a password if the user requires one.
+        if (!_selectedUser.IgnorePassword &&
+            string.IsNullOrWhiteSpace(password))
         {
             ShowError("Unesite šifru.");
             PasswordBox.Focus();
+            return;
         }
 
-        var isAuthenticated = _authService.Login(_selectedUser, password);
+        // Authenticate the selected user.
+        var isAuthenticated = _authService.Login(
+            _selectedUser,
+            password);
 
         if (!isAuthenticated)
         {
@@ -70,10 +92,14 @@ public partial class LoginView : UserControl
             return;
         }
 
-        ErrorText.Foreground = new SolidColorBrush(Color.Parse("#16A34A"));
-        ShowError($"Dobrodošli, {_selectedUser?.FullName}!");
+        // Persist the authenticated user.
+        await _authSession.SetUserAsync(_selectedUser);
 
-        _authSession.SetUser(_selectedUser!);
+        ErrorText.Foreground = new SolidColorBrush(Color.Parse("#16A34A"));
+
+        ShowError($"Dobrodošli, {_selectedUser.FullName}!");
+
+        // Navigate to the dashboard.
         _onLoginSuccess();
     }
 

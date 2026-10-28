@@ -30,6 +30,7 @@ public partial class AddEditUser : Window
         Naslov.Text = WindowTitle;
 
         RoleComboBox.SelectedIndex = 1;
+        IgnorePassword.IsChecked = true;
         IsActiveCheckBox.IsChecked = true;
 
         ReprezentAutoComplete.PropertyChanged += ReprezentAutoComplete_PropertyChanged;
@@ -79,6 +80,8 @@ public partial class AddEditUser : Window
         FirstNameTextBox.Text = firstName;
         GarsonIdTextBox.Text = reprezent.IdReprezenta.ToString();
         UsernameTextBox.Text = GenerateUsername(firstName, lastName);
+
+        ReprezentAutoComplete.Text = null;
     }
 
     private void LoadUser()
@@ -92,6 +95,8 @@ public partial class AddEditUser : Window
 
         RoleComboBox.SelectedIndex = (int)(_user.Role + 1);
         IsActiveCheckBox.IsChecked = _user.IsActive;
+        IgnorePassword.IsChecked = _user.IgnorePassword;
+        PasswordTextBox.IsEnabled = !_user.IgnorePassword;
     }
 
     private static string GenerateUsername(string firstName, string lastName)
@@ -131,7 +136,7 @@ public partial class AddEditUser : Window
                 // await ShowErrorAsync("Username je obavezan.");
                 return;
 
-            if (string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(password) && !IgnorePassword.IsChecked!.Value)
                 // await ShowErrorAsync("Lozinka je obavezna.");
                 return;
 
@@ -147,6 +152,7 @@ public partial class AddEditUser : Window
                 LastName = lastName,
                 Username = username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+                IgnorePassword = IgnorePassword.IsChecked!.Value,
                 Role = (Role)(RoleComboBox.SelectedIndex + 1),
                 IsActive = true
             };
@@ -173,5 +179,10 @@ public partial class AddEditUser : Window
         // Za sada placeholder.
         // Možemo napraviti lijepi Avalonia dialog kasnije.
         await Task.CompletedTask;
+    }
+
+    private void IgnorePasswordCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        PasswordTextBox.IsEnabled = IgnorePassword.IsChecked!.Value;
     }
 }

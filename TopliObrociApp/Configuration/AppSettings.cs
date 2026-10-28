@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TopliObrociApp.Configuration;
@@ -11,8 +12,7 @@ public static class AppSettings
     private const string ShareName = "TopliObrociDB";
     private const string FileName = "users.json";
 
-    private static string MacMountPoint =>
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ShareName);
+    private static string MacMountPoint => Path.Combine("/Volumes", ShareName);
 
     public static string UsersFilePath
     {
@@ -33,25 +33,48 @@ public static class AppSettings
 
         try
         {
-            Directory.CreateDirectory(MacMountPoint);
-
-            var process = new Process
+            var psi = new ProcessStartInfo
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "/sbin/mount_smbfs",
-                    Arguments = $"-N //guest@{ServerIp}/{ShareName} \"{MacMountPoint}\"",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
+                FileName = "/usr/bin/osascript",
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false
             };
 
+            psi.ArgumentList.Add("-e");
+            psi.ArgumentList.Add($"mount volume \"smb://{ServerIp}/{ShareName}\"");
+
+            using var process = new Process();
+            process.StartInfo = psi;
             process.Start();
 
-            var error = await process.StandardError.ReadToEndAsync();
-            await process.WaitForExitAsync();
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+            var errorTask = process.StandardError.ReadToEndAsync(cts.Token);
+            var outputTask = process.StandardOutput.ReadToEndAsync(cts.Token);
+
+            Console.Write("test");
+            try
+            {
+                await process.WaitForExitAsync(cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                try
+                {
+                    process.Kill(true);
+                }
+                catch
+                {
+                    /* ignore */
+                }
+
+                Console.WriteLine("SMB mount timed out (possibly waiting on a credentials dialog).");
+                return false;
+            }
+
+            var error = await errorTask;
+            await outputTask;
 
             if (process.ExitCode == 0) return IsShareMounted();
 
@@ -67,6 +90,13 @@ public static class AppSettings
 
     private static bool IsShareMounted()
     {
-        return Directory.Exists(MacMountPoint) && Directory.GetFileSystemEntries(MacMountPoint).Length > 0;
+        try
+        {
+            return File.Exists(Path.Combine(MacMountPoint, FileName));
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
