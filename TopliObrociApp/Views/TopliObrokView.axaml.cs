@@ -13,6 +13,8 @@ public partial class TopliObrokView : UserControl
     private readonly GarsonService _garsonService = new();
     private DateTime _currentMonth = new(DateTime.Today.Year, DateTime.Today.Month, 1);
 
+    private bool _isLoading = true;
+
     public TopliObrokView(AuthSession authSession)
     {
         InitializeComponent();
@@ -55,6 +57,10 @@ public partial class TopliObrokView : UserControl
 
             ReceiptsGrid.ItemsSource = racuni;
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
         finally
         {
             ToggleLoading(false);
@@ -79,10 +85,9 @@ public partial class TopliObrokView : UserControl
         return days;
     }
 
-
-    private void Input_ValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    private void AbsentDaysChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
-        // UpdateScreen();
+        if (!_isLoading) _ = UpdateScreen();
     }
 
     private void PreviousMonth_Click(object? sender, RoutedEventArgs e)
@@ -104,7 +109,8 @@ public partial class TopliObrokView : UserControl
 
     private void ToggleLoading(bool loading)
     {
-        ContentGrid.Effect = loading ? new BlurEffect { Radius = 10 } : null;
-        LoadingOverlay.IsVisible = loading;
+        _isLoading = loading;
+        ContentGrid.Effect = _isLoading ? new BlurEffect { Radius = 10 } : null;
+        LoadingOverlay.IsVisible = _isLoading;
     }
 }

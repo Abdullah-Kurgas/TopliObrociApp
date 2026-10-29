@@ -31,9 +31,6 @@
         <Style Selector="RadioButton.navItem:pointerover /template/ Border">
             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
         </Style>
-        <Style Selector="RadioButton.navItem:pointerover">
-            <Setter Property="Foreground" Value="#E4E4E7" />
-        </Style>
 
         <Style Selector="RadioButton.navItem:checked /template/ Border">
             <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
@@ -50,10 +47,6 @@
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
-        </Style>
-
-        <Style Selector="Button.actionItem:pointerover">
-            <Setter Property="Foreground" Value="#E4E4E7" />
         </Style>
     </UserControl.Styles>
 
@@ -74,14 +67,14 @@
                 <StackPanel Grid.Row="1">
                     <RadioButton Classes="navItem" Content="Topli obrok" Tag="BowlChopsticks" IsChecked="True"
                                  GroupName="MainNav" Click="TopliObrok_Click" />
-                    <RadioButton x:Name="KorisniciNav" Classes="navItem" Content="Korisnici" Tag="People"
+                    <RadioButton Name="KorisniciNav" Classes="navItem" Content="Korisnici" Tag="People"
                                  GroupName="MainNav"
                                  Click="Korisnici_Click" />
                 </StackPanel>
 
                 <StackPanel Grid.Row="2">
-                    <Button Classes="actionItem" Content="Postavke" />
-                    <Button Classes="actionItem" Content="Odjava" />
+                    <Button Classes="actionItem" Content="Postavke" Name="PostavkeBtn" />
+                    <Button Classes="actionItem" Content="Odjava" Name="OdjavaBtn" Click="Odjava_Click" />
                 </StackPanel>
             </Grid>
         </Border>
