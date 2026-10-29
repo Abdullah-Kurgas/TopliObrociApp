@@ -16,9 +16,7 @@ public partial class LoginView : UserControl
 
     private User? _selectedUser;
 
-    public LoginView(
-        AuthSession authSession,
-        Action showDashboard)
+    public LoginView(AuthSession authSession, Action showDashboard)
     {
         InitializeComponent();
 
@@ -81,10 +79,7 @@ public partial class LoginView : UserControl
             return;
         }
 
-        // Authenticate the selected user.
-        var isAuthenticated = _authService.Login(
-            _selectedUser,
-            password);
+        var isAuthenticated = _authService.Login(_selectedUser, password);
 
         if (!isAuthenticated)
         {
@@ -92,14 +87,12 @@ public partial class LoginView : UserControl
             return;
         }
 
-        // Persist the authenticated user.
         await _authSession.SetUserAsync(_selectedUser);
 
         ErrorText.Foreground = new SolidColorBrush(Color.Parse("#16A34A"));
 
         ShowError($"Dobrodošli, {_selectedUser.FullName}!");
 
-        // Navigate to the dashboard.
         _onLoginSuccess();
     }
 

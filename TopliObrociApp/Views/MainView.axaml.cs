@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using TopliObrociApp.Enums;
@@ -41,5 +42,13 @@ public partial class MainView : UserControl
         var role = _authSession.CurrentUser!.Role;
 
         KorisniciNav.IsVisible = role == Role.Administrator;
+        PostavkeBtn.IsVisible = role == Role.Administrator;
+        OdjavaBtn.IsVisible = role == Role.Administrator;
+    }
+
+    private async void Odjava_Click(object? sender, RoutedEventArgs e)
+    {
+        await _authSession.LogoutAsync();
+        Environment.Exit(0);
     }
 }

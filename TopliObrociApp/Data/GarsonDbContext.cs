@@ -1,4 +1,3 @@
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using TopliObrociApp.Models;
 
@@ -13,7 +12,10 @@ public class GarsonDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseFirebird(ConfigurationManager.ConnectionStrings["GarsonDB"].ConnectionString);
+        const string connectionString =
+            @"User=mbauser;Password=CzBruVpGHi;Database=C:\Program Files (x86)\2D Soft\Garson BackOffice 6\Database\BACKOFFICE - Slatkoislano.FDB;DataSource=192.168.0.32;Port=3054;Dialect=3;Charset=UTF8";
+
+        optionsBuilder.UseFirebird(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
