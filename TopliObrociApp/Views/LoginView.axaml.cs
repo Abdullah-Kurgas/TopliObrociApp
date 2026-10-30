@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -17,6 +19,7 @@ public partial class LoginView : UserControl
 
     private readonly bool _isAdminLogin = false;
     private readonly Action _onLoginSuccess;
+    private CancellationTokenSource? _autocompleteCts;
 
     private User? _selectedUser;
 
@@ -30,25 +33,46 @@ public partial class LoginView : UserControl
         ReprezentAutoComplete.PropertyChanged += ReprezentAutoComplete_PropertyChanged;
     }
 
-
     private async void ReprezentAutoComplete_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
+        var searchText = ReprezentAutoComplete.Text?.Trim();
+
+        _autocompleteCts?.Cancel();
+
+        var cts = new CancellationTokenSource();
+        _autocompleteCts = cts;
+
         try
         {
-            var search = ReprezentAutoComplete.Text?.Trim().ToLower();
+            await Task.Delay(350, cts.Token);
 
-            if (string.IsNullOrWhiteSpace(search) || search.Length < 2)
+            if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 2)
             {
-                ReprezentAutoComplete.ItemsSource = null;
+                if (ReferenceEquals(_autocompleteCts, cts)) ReprezentAutoComplete.ItemsSource = null;
                 return;
             }
 
-            var results = await _garsonService.GetReprezenteByNameAsync(search);
+            var results = await _garsonService.GetReprezenteByNameAsync(searchText);
+
+            if (cts.IsCancellationRequested || !ReferenceEquals(_autocompleteCts, cts))
+                return;
+
             ReprezentAutoComplete.ItemsSource = results;
+            ReprezentAutoComplete.IsDropDownOpen = results.Count > 0;
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine(searchText);
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            ShowError(ex.Message);
+        }
+        finally
+        {
+            if (ReferenceEquals(_autocompleteCts, cts)) _autocompleteCts = null;
+
+            cts.Dispose();
         }
     }
 
