@@ -173,7 +173,7 @@
                                 Maximum="31"
                                 Increment="1"
                                 ShowButtonSpinner="False"
-                                ValueChanged="Input_ValueChanged" />
+                                ValueChanged="AbsentDaysChanged" />
                         </Grid>
                     </Border>
                 </Grid>

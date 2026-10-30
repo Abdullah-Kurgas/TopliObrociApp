@@ -24,4 +24,10 @@
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.12"/>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Views\KorisniciView.axaml.cs">
+            <DependentUpon>KorisniciView.axaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
 </Project>

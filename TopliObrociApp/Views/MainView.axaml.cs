@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using TopliObrociApp.Enums;
 using TopliObrociApp.Services;
@@ -32,23 +33,27 @@ public partial class MainView : UserControl
         ShowTopliObrok();
     }
 
-    private void Korisnici_Click(object? sender, RoutedEventArgs e)
+    private void Radnici_Click(object? sender, RoutedEventArgs e)
     {
-        _navigation.Navigate(new KorisniciView(_authSession));
+        _navigation.Navigate(new KorisniciView());
     }
 
     private void ApplyRolePermissions()
     {
         var role = _authSession.CurrentUser!.Role;
 
-        KorisniciNav.IsVisible = role == Role.Administrator;
+        RadniciNav.IsVisible = role == Role.Administrator;
         PostavkeBtn.IsVisible = role == Role.Administrator;
-        OdjavaBtn.IsVisible = role == Role.Administrator;
     }
 
     private async void Odjava_Click(object? sender, RoutedEventArgs e)
     {
         await _authSession.LogoutAsync();
         Environment.Exit(0);
+    }
+
+    private void DoubleTapped(object? sender, TappedEventArgs e)
+    {
+        OdjavaBtn.IsVisible = !OdjavaBtn.IsVisible;
     }
 }
