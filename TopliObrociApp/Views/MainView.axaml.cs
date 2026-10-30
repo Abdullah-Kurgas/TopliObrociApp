@@ -19,6 +19,9 @@ public partial class MainView : UserControl
         _authSession = authSession;
         _navigation = new NavigationService(ContentArea);
 
+        UserInitial.Text = _authSession.CurrentUser?.Initial ?? "?";
+        UserFullName.Text = _authSession.CurrentUser?.FullName ?? "?";
+
         ApplyRolePermissions();
         ShowTopliObrok();
     }
