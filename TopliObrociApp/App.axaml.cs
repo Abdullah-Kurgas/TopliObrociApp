@@ -1,8 +1,6 @@
-using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using TopliObrociApp.Configuration;
 using TopliObrociApp.Windows;
 
 namespace TopliObrociApp;
@@ -21,17 +19,6 @@ public class App : Application
             var splashScreen = new SplashScreen();
             desktop.MainWindow = splashScreen;
             splashScreen.Show();
-
-            try
-            {
-                var mounted = await AppSettings.EnsureUsersShareMountedAsync();
-                Console.Write(mounted);
-                if (!mounted) throw new Exception("Nije dohvacena putanja ka users.json");
-            }
-            catch (Exception e)
-            {
-                return;
-            }
 
             var mainWindow = new MainWindow();
             desktop.MainWindow = mainWindow;

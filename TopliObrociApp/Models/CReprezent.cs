@@ -5,7 +5,7 @@ namespace TopliObrociApp.Models;
 
 public class CReprezent
 {
-    [Key] [Column("ID_REPREZENTA")] public long IdReprezenta { get; init; }
+    [Key] [Column("ID_REPREZENTA")] public int IdReprezenta { get; init; }
 
     [Column("SIF_REPREZENTA")] public string SifReprezenta { get; init; } = string.Empty;
 

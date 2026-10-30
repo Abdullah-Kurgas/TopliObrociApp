@@ -1,13 +1,9 @@
-using TopliObrociApp.Models;
-
 namespace TopliObrociApp.Services;
 
 public class AuthService
 {
-    public bool Login(User user, string password)
+    public bool Login(string password, bool isAdminLogin)
     {
-        if (!user.IsActive) return false;
-
-        return user.IgnorePassword || BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+        return !isAdminLogin || BCrypt.Net.BCrypt.Verify(password, "TODO:....");
     }
 }

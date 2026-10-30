@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Media;
+using TopliObrociApp.Enums;
 using TopliObrociApp.Models;
 using TopliObrociApp.Services;
 
@@ -11,8 +13,10 @@ public partial class LoginView : UserControl
 {
     private readonly AuthService _authService = new();
     private readonly AuthSession _authSession;
+    private readonly GarsonService _garsonService = new();
+
+    private readonly bool _isAdminLogin = false;
     private readonly Action _onLoginSuccess;
-    private readonly UserService _userService = new();
 
     private User? _selectedUser;
 
@@ -23,42 +27,64 @@ public partial class LoginView : UserControl
         _authSession = authSession;
         _onLoginSuccess = showDashboard;
 
-        LoadUsers();
+        ReprezentAutoComplete.PropertyChanged += ReprezentAutoComplete_PropertyChanged;
     }
 
-    private void LoadUsers()
+
+    private async void ReprezentAutoComplete_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
-        var users = _userService.GetUsers();
+        try
+        {
+            var search = ReprezentAutoComplete.Text?.Trim().ToLower();
 
-        UsersList.ItemsSource = users;
+            if (string.IsNullOrWhiteSpace(search) || search.Length < 2)
+            {
+                ReprezentAutoComplete.ItemsSource = null;
+                return;
+            }
 
-        if (users.Count != 0) UsersList.SelectedIndex = 0;
+            var results = await _garsonService.GetReprezenteByNameAsync(search);
+            ReprezentAutoComplete.ItemsSource = results;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 
-    private void UsersList_SelectionChanged(
-        object? sender,
-        SelectionChangedEventArgs e)
+    private void ReprezentAutoComplete_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {
-        _selectedUser = UsersList.SelectedItem as User;
+        if (e.Property != AutoCompleteBox.SelectedItemProperty) return;
+        if (e.NewValue is not CReprezent reprezent) return;
 
-        if (_selectedUser == null)
-            return;
+        var parts = reprezent.Ime.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 0) return;
+
+        var lastName = parts[0];
+        var firstName = string.Join(" ", parts.Skip(1));
+
+        _selectedUser = new User
+        {
+            GarsonId = reprezent.IdReprezenta,
+            FirstName = firstName,
+            LastName = lastName,
+            Role = OdaberiUserRolu()
+        };
 
         SelectedUserName.Text = _selectedUser.FullName;
         SelectedUserInitial.Text = _selectedUser.Initial;
 
-        PasswordBox.Text = string.Empty;
-
-        PasswordBox.IsVisible = !_selectedUser.IgnorePassword;
-
-        ErrorText.Text = string.Empty;
-
-        PasswordBox.Focus();
+        ReprezentAutoComplete.Text = null;
+        ReprezentAutoComplete.IsVisible = false;
+        LoginButton.IsVisible = true;
     }
 
-    private async void LoginButton_Click(
-        object? sender,
-        RoutedEventArgs e)
+    private Role OdaberiUserRolu()
+    {
+        return Role.ObicniKorisnik;
+    }
+
+    private async void LoginButton_Click(object? sender, RoutedEventArgs e)
     {
         var password = PasswordBox.Text ?? "";
 
@@ -70,16 +96,15 @@ public partial class LoginView : UserControl
             return;
         }
 
-        // Only require a password if the user requires one.
-        if (!_selectedUser.IgnorePassword &&
-            string.IsNullOrWhiteSpace(password))
+        // Only require a password if it is admin login.
+        if (_isAdminLogin && string.IsNullOrWhiteSpace(password))
         {
             ShowError("Unesite šifru.");
             PasswordBox.Focus();
             return;
         }
 
-        var isAuthenticated = _authService.Login(_selectedUser, password);
+        var isAuthenticated = _authService.Login(password, _isAdminLogin);
 
         if (!isAuthenticated)
         {
@@ -88,11 +113,6 @@ public partial class LoginView : UserControl
         }
 
         await _authSession.SetUserAsync(_selectedUser);
-
-        ErrorText.Foreground = new SolidColorBrush(Color.Parse("#16A34A"));
-
-        ShowError($"Dobrodošli, {_selectedUser.FullName}!");
-
         _onLoginSuccess();
     }
 
