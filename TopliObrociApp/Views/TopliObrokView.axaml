@@ -61,10 +61,10 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="15">
+            <Grid Grid.Row="1" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
                 <Grid
                     x:Name="ContentGrid"
-                    RowDefinitions="Auto,Auto,Auto"
+                    RowDefinitions="Auto,Auto"
                     RowSpacing="16">
 
                     <Border
@@ -101,52 +101,7 @@
                         </StackPanel>
                     </Border>
 
-                    <Grid
-                        Grid.Row="1"
-                        ColumnDefinitions="*,*"
-                        ColumnSpacing="12">
-                        <Border
-                            Grid.Column="0"
-                            Padding="16"
-                            CornerRadius="14"
-                            BorderThickness="1"
-                            Background="{DynamicResource SystemChromeMediumColor}"
-                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                            <StackPanel Spacing="5">
-                                <TextBlock
-                                    Text="Na raspolaganju"
-                                    Opacity="0.56" />
-
-                                <TextBlock
-                                    x:Name="AvailableAmountText"
-                                    Text="0,00 KM"
-                                    FontSize="20"
-                                    FontWeight="Medium" />
-                            </StackPanel>
-                        </Border>
-
-                        <Border
-                            Grid.Column="1"
-                            Padding="16"
-                            CornerRadius="14"
-                            BorderThickness="1"
-                            Background="{DynamicResource SystemChromeMediumColor}"
-                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                            <StackPanel Spacing="5">
-                                <TextBlock
-                                    Text="Potrošeno"
-                                    Opacity="0.56" />
-
-                                <TextBlock
-                                    x:Name="SpentAmountText"
-                                    Text="0,00 KM"
-                                    FontSize="20"
-                                    FontWeight="Medium" />
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-
-                    <Border Grid.Row="2"
+                    <Border Grid.Row="1"
                             Padding="16"
                             CornerRadius="14"
                             BorderThickness="1"
@@ -178,70 +133,112 @@
                     </Border>
                 </Grid>
 
-                <StackPanel Grid.Column="1" Spacing="25">
-                    <Border
+                <Grid
+                    Grid.Column="1"
+                    RowDefinitions="*, *"
+                    RowSpacing="12">
+                    <Border Grid.Row="0"
+                            Padding="16"
+                            CornerRadius="14"
+                            BorderThickness="1"
+                            Background="{DynamicResource SystemChromeMediumColor}"
+                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                        <StackPanel Spacing="7">
+                            <TextBlock
+                                Text="Na raspolaganju"
+                                Opacity="0.56" />
+
+                            <TextBlock
+                                x:Name="AvailableAmountText"
+                                Text="0,00 KM"
+                                FontSize="20"
+                                FontWeight="Medium" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                            Padding="16"
+                            CornerRadius="14"
+                            BorderThickness="1"
+                            Background="{DynamicResource SystemChromeMediumColor}"
+                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                        <StackPanel Spacing="7">
+                            <TextBlock
+                                Text="Potrošeno"
+                                Opacity="0.56" />
+
+                            <TextBlock
+                                x:Name="SpentAmountText"
+                                Text="0,00 KM"
+                                FontSize="20"
+                                FontWeight="Medium" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+
+                <Border Grid.Column="2"
                         Padding="16"
                         CornerRadius="14"
                         BorderThickness="1"
                         Background="{DynamicResource SystemChromeMediumColor}"
                         BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="28">
-                            <StackPanel
-                                Grid.Row="0"
-                                HorizontalAlignment="Center"
-                                Spacing="6">
-                                <TextBlock
-                                    Text="Radnih dana"
-                                    FontSize="13"
-                                    Opacity="0.56"
-                                    HorizontalAlignment="Center" />
+                    <Grid RowDefinitions="*,*,*" RowSpacing="28">
+                        <StackPanel
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            Spacing="6">
+                            <TextBlock
+                                Text="Radnih dana"
+                                FontSize="13"
+                                Opacity="0.56"
+                                HorizontalAlignment="Center" />
 
-                                <TextBlock
-                                    x:Name="WorkingDaysText"
-                                    Text="22"
-                                    FontSize="19"
-                                    FontWeight="Medium"
-                                    HorizontalAlignment="Center" />
-                            </StackPanel>
+                            <TextBlock
+                                x:Name="WorkingDaysText"
+                                Text="22"
+                                FontSize="19"
+                                FontWeight="Medium"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
 
-                            <StackPanel
-                                Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                Spacing="6">
-                                <TextBlock
-                                    Text="Izostali dani"
-                                    FontSize="13"
-                                    Opacity="0.56"
-                                    HorizontalAlignment="Center" />
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            Spacing="6">
+                            <TextBlock
+                                Text="Izostali dani"
+                                FontSize="13"
+                                Opacity="0.56"
+                                HorizontalAlignment="Center" />
 
-                                <TextBlock
-                                    x:Name="VacationDaysText"
-                                    Text="0"
-                                    FontSize="19"
-                                    FontWeight="Medium"
-                                    HorizontalAlignment="Center" />
-                            </StackPanel>
+                            <TextBlock
+                                x:Name="VacationDaysText"
+                                Text="0"
+                                FontSize="19"
+                                FontWeight="Medium"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
 
-                            <StackPanel
-                                Grid.Row="2"
-                                HorizontalAlignment="Center"
-                                Spacing="6">
-                                <TextBlock
-                                    Text="Dani obračuna"
-                                    FontSize="13"
-                                    Opacity="0.56"
-                                    HorizontalAlignment="Center" />
+                        <StackPanel
+                            Grid.Row="2"
+                            HorizontalAlignment="Center"
+                            Spacing="6">
+                            <TextBlock
+                                Text="Dani obračuna"
+                                FontSize="13"
+                                Opacity="0.56"
+                                HorizontalAlignment="Center" />
 
-                                <TextBlock
-                                    x:Name="CalculatedDaysText"
-                                    Text="22"
-                                    FontSize="19"
-                                    FontWeight="Medium"
-                                    HorizontalAlignment="Center" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </StackPanel>
+                            <TextBlock
+                                x:Name="CalculatedDaysText"
+                                Text="22"
+                                FontSize="19"
+                                FontWeight="Medium"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
             </Grid>
 
             <Border Grid.Row="2">
