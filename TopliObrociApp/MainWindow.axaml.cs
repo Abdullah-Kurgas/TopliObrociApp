@@ -8,6 +8,7 @@ public partial class MainWindow : Window
 {
     private readonly AuthSession _authSession;
     private readonly NavigationService _navigation;
+    private readonly UpdateService _updateService;
 
     public MainWindow()
     {
@@ -15,8 +16,10 @@ public partial class MainWindow : Window
 
         _authSession = new AuthSession();
         _navigation = new NavigationService(MainContent);
+        _updateService = new UpdateService();
 
         OpenApplicationAsync();
+        CheckForUpdateAsync();
     }
 
     private async void OpenApplicationAsync()
@@ -37,5 +40,15 @@ public partial class MainWindow : Window
     private void ShowMainView()
     {
         _navigation.Navigate(new MainView(_authSession));
+    }
+
+    private async void CheckForUpdateAsync()
+    {
+        var update = await _updateService.CheckForUpdateAsync();
+
+        if (update == null)
+            return;
+
+        UpdateNotificationPanel.ShowUpdate(update);
     }
 }

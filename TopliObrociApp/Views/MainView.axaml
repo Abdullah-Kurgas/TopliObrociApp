@@ -160,6 +160,6 @@
 
         </Grid>
 
-        <ContentControl x:Name="ContentArea" Grid.Row="1" Padding="24 0 24 24" />
+        <ContentControl x:Name="ContentArea" Grid.Row="1" Padding="24 0 24 14" />
     </Grid>
 </Window>

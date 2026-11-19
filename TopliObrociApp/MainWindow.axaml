@@ -1,14 +1,13 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        x:Class="TopliObrociApp.MainWindow"
-        Title="Topli Obroci"
-        Icon="/Assets/Windows/icon-256x256px.png"
-        MinWidth="1450"
-        MinHeight="850">
-
-    <ContentControl x:Name="MainContent" />
-
+<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:TopliObrociApp.Views.Controls"
+    x:Class="TopliObrociApp.MainWindow"
+    Title="Topli obroci"
+    MinWidth="1450"
+    MinHeight="850">
+    <Grid RowDefinitions="*,Auto">
+        <ContentControl x:Name="MainContent" Grid.Row="0" />
+        <controls:UpdateNotification x:Name="UpdateNotificationPanel" Grid.Row="1" />
+    </Grid>
 </Window>
