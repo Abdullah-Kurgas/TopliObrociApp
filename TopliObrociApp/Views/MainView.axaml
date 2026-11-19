@@ -71,7 +71,7 @@
                     BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
                     CornerRadius="50"
                     HorizontalAlignment="Left"
-                    Padding="11 0 15 0">
+                    Padding="14 0 18 0">
                 <StackPanel Orientation="Horizontal"
                             Spacing="3"
                             VerticalAlignment="Center">
@@ -98,7 +98,7 @@
                 <StackPanel Orientation="Horizontal"
                             Spacing="4">
                     <RadioButton Classes="navItem"
-                                 Content="Topli obrok"
+                                 Content="Mjesečni pregled"
                                  Tag="BowlChopsticks"
                                  GroupName="MainNav"
                                  IsChecked="True"
@@ -108,6 +108,8 @@
                                  Content="Radni raspored"
                                  Tag="Calendar"
                                  GroupName="MainNav"
+                                 IsEnabled="False"
+                                 IsVisible="False"
                                  Click="Radniraspored_Click" />
 
                     <RadioButton Name="RadniciNav"
@@ -160,6 +162,6 @@
 
         </Grid>
 
-        <ContentControl x:Name="ContentArea" Grid.Row="1" Padding="24 0 24 14" />
+        <ContentControl x:Name="ContentArea" Grid.Row="1" Padding="24 5 24 14" />
     </Grid>
 </Window>
