@@ -4,10 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ic="using:FluentIcons.Avalonia"
         mc:Ignorable="d"
-        d:DesignWidth="1300"
-        d:DesignHeight="900"
-        MinWidth="1000"
-        MinHeight="700"
         x:Class="TopliObrociApp.Views.MainView">
     <Window.Styles>
         <Style Selector="RadioButton.navItem">
@@ -69,11 +65,27 @@
               ColumnDefinitions="*,Auto,*"
               Margin="24,10,24,10">
             <Border Grid.Column="0"
+                    MaxHeight="50"
+                    Height="50"
                     Background="{DynamicResource SystemChromeMediumColor}"
                     BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
                     CornerRadius="50"
                     HorizontalAlignment="Left"
-                    Padding="4" />
+                    Padding="11 0 15 0">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="3"
+                            VerticalAlignment="Center">
+                    <Image Source="avares://TopliObrociApp/Assets/Windows/icon-256x256px.png"
+                           Width="38"
+                           Height="38"
+                           Stretch="Uniform" />
+
+                    <TextBlock Text="Topli obroci"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </Border>
 
             <Border Grid.Column="1"
                     MaxHeight="50"
