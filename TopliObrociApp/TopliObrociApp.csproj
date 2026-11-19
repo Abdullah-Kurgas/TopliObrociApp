@@ -4,8 +4,8 @@
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-
         <ApplicationIcon>Assets\Windows\TopliObroci.ico</ApplicationIcon>
+        <Version>2.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
