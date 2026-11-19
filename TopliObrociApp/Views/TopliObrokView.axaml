@@ -2,7 +2,8 @@
     x:Class="TopliObrociApp.Views.TopliObrokView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ic="using:FluentIcons.Avalonia">
+    xmlns:ic="using:FluentIcons.Avalonia"
+    xmlns:controls="using:TopliObrociApp.Views.Controls">
     <UserControl.Styles>
         <Style Selector="NumericUpDown">
             <Setter Property="CornerRadius" Value="10" />
@@ -13,9 +14,9 @@
     </UserControl.Styles>
 
     <Grid>
-        <Grid RowDefinitions="Auto, Auto, *" RowSpacing="20" Margin="24">
+        <Grid x:Name="ContentGrid" RowDefinitions="Auto, Auto, *" RowSpacing="20">
             <Grid
-                Grid.Row="0" ColumnDefinitions="Auto,300,Auto" HorizontalAlignment="Center" ColumnSpacing="60">
+                Grid.Row="0" ColumnDefinitions="Auto,200,Auto" HorizontalAlignment="Left" ColumnSpacing="60">
                 <Button
                     Grid.Column="0"
                     Click="PreviousMonth_Click"
@@ -33,7 +34,7 @@
                 <StackPanel
                     Grid.Column="1"
                     HorizontalAlignment="Center"
-                    Spacing="4">
+                    Spacing="2">
                     <TextBlock
                         x:Name="MonthNameText"
                         FontSize="20"
@@ -63,7 +64,6 @@
 
             <Grid Grid.Row="1" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
                 <Grid
-                    x:Name="ContentGrid"
                     RowDefinitions="Auto,Auto"
                     RowSpacing="16">
 
@@ -273,9 +273,20 @@
                                 Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}" />
 
                             <DataGridTextColumn
+                                Header="Poslovnica"
+                                Width="160"
+                                Binding="{Binding IdDokumentaVeze}" />
+
+                            <DataGridTextColumn
                                 Header="Opis"
                                 Width="*"
                                 Binding="{Binding Opis}" />
+
+                            <DataGridTextColumn
+                                Header="Storno"
+                                Width="80"
+                                Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}"
+                                Binding="{Binding Status}" />
 
                             <DataGridTextColumn
                                 Header="Iznos"
@@ -289,7 +300,7 @@
 
         <Border
             x:Name="LoadingOverlay"
-            ZIndex="100"
+            ZIndex="1000"
             Background="#50000000">
             <StackPanel
                 HorizontalAlignment="Center"
@@ -305,5 +316,14 @@
                     HorizontalAlignment="Center" />
             </StackPanel>
         </Border>
+
+        <Grid x:Name="ReceiptDetailsOverlay"
+              IsVisible="False"
+              ZIndex="100">
+            <controls:RacunDetailsPanel
+                x:Name="RacunDetailsPanel"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Stretch" />
+        </Grid>
     </Grid>
 </UserControl>

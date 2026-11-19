@@ -36,6 +36,11 @@ public partial class MainView : UserControl
         ShowTopliObrok();
     }
 
+    private void Radniraspored_Click(object? sender, RoutedEventArgs e)
+    {
+        _navigation.Navigate(new RadniRasporedView());
+    }
+
     private void Radnici_Click(object? sender, RoutedEventArgs e)
     {
         _navigation.Navigate(new KorisniciView());
@@ -46,7 +51,7 @@ public partial class MainView : UserControl
         var role = _authSession.CurrentUser!.Role;
 
         RadniciNav.IsVisible = role == Role.Administrator;
-        PostavkeBtn.IsVisible = role == Role.Administrator;
+        // PostavkeBtn.IsVisible = role == Role.Administrator;
     }
 
     private async void Odjava_Click(object? sender, RoutedEventArgs e)
@@ -57,6 +62,6 @@ public partial class MainView : UserControl
 
     private void DoubleTapped(object? sender, TappedEventArgs e)
     {
-        OdjavaBtn.IsVisible = !OdjavaBtn.IsVisible;
+        // OdjavaBtn.IsVisible = !OdjavaBtn.IsVisible;
     }
 }

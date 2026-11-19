@@ -6,9 +6,10 @@ namespace TopliObrociApp.Data;
 public class GarsonDbContext : DbContext
 {
     public DbSet<CReprezent> C_REPREZENTI { get; set; }
-    // public DbSet<Objekat> C_OBJEKTI { get; set; }
+    public DbSet<CArtikli> C_ARTIKLI { get; set; }
 
     public DbSet<RReprezentiKartice> R_REPREZENTI_KARTICE { get; set; }
+    public DbSet<RRacuniStavka> R_RACUNI_STAVKE { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

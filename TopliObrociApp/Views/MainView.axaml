@@ -1,28 +1,42 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             xmlns:ic="using:FluentIcons.Avalonia"
-             x:Class="TopliObrociApp.Views.MainView">
-
-    <UserControl.Styles>
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ic="using:FluentIcons.Avalonia"
+        mc:Ignorable="d"
+        d:DesignWidth="1300"
+        d:DesignHeight="900"
+        MinWidth="1000"
+        MinHeight="700"
+        x:Class="TopliObrociApp.Views.MainView">
+    <Window.Styles>
         <Style Selector="RadioButton.navItem">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#A1A1AA" />
-            <Setter Property="Padding" Value="16,12" />
-            <Setter Property="Margin" Value="0,2" />
-            <Setter Property="CornerRadius" Value="12" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Foreground" Value="#71717A" />
+            <Setter Property="Padding" Value="16,11" />
+            <Setter Property="CornerRadius" Value="50" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Template">
                 <ControlTemplate>
                     <Border Background="{TemplateBinding Background}"
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <StackPanel Orientation="Horizontal" Spacing="16">
-                            <ic:FluentIcon Icon="{TemplateBinding Tag}" FontSize="20" VerticalAlignment="Center" />
-                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" />
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="9"
+                                    VerticalAlignment="Center">
+
+                            <ic:FluentIcon Icon="{TemplateBinding Tag}"
+                                           FontSize="20"
+                                           FontWeight="Medium"
+                                           VerticalAlignment="Center" />
+
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              VerticalAlignment="Center" />
+
                         </StackPanel>
                     </Border>
                 </ControlTemplate>
@@ -33,69 +47,107 @@
             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
         </Style>
 
-        <Style Selector="RadioButton.navItem:checked /template/ Border">
-            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
-        </Style>
         <Style Selector="RadioButton.navItem:checked">
             <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundPressed}" />
         </Style>
 
-        <Style Selector="Button.actionItem">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#A1A1AA" />
-            <Setter Property="Padding" Value="16,12" />
-            <Setter Property="CornerRadius" Value="12" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Style Selector="RadioButton.navItem:checked /template/ Border">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
         </Style>
-    </UserControl.Styles>
 
-    <Grid ColumnDefinitions="220,*">
-        <Border Grid.Column="0" HorizontalAlignment="Stretch" Padding="15">
-            <Grid RowDefinitions="Auto, *, Auto">
-                <StackPanel Grid.Row="0"
-                            Orientation="Horizontal"
-                            Margin="0,32,0,45"
-                            Spacing="12">
-                    <Border
-                        Name="SelectedUserAvatar"
-                        Width="35"
-                        Height="35"
-                        CornerRadius="5"
-                        HorizontalAlignment="Center"
-                        Background="{DynamicResource SystemChromeLowColor}"
-                        DoubleTapped="DoubleTapped">
-                        <TextBlock
-                            Name="UserInitial"
-                            Text="?"
-                            FontSize="15"
-                            FontWeight="SemiBold"
-                            Opacity=".5"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center" />
-                    </Border>
+        <Style Selector="Button.userButton">
+            <Setter Property="Height" Value="50" />
+            <Setter Property="MaxHeight" Value="50" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10 8 16 8" />
+            <Setter Property="CornerRadius" Value="50" />
+        </Style>
+    </Window.Styles>
 
-                    <TextBlock Name="UserFullName" FontSize="14" FontWeight="Medium"
-                               VerticalAlignment="Center" />
-                </StackPanel>
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto,*"
+              Margin="24,10,24,10">
+            <Border Grid.Column="0"
+                    Background="{DynamicResource SystemChromeMediumColor}"
+                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                    CornerRadius="50"
+                    HorizontalAlignment="Left"
+                    Padding="4" />
 
-                <StackPanel Grid.Row="1">
-                    <RadioButton Classes="navItem" Content="Topli obrok" Tag="BowlChopsticks" IsChecked="True"
-                                 GroupName="MainNav" Click="TopliObrok_Click" />
-                    <RadioButton Name="RadniciNav" Classes="navItem" Content="Radnici" Tag="People"
+            <Border Grid.Column="1"
+                    MaxHeight="50"
+                    Height="50"
+                    Background="{DynamicResource SystemChromeMediumColor}"
+                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                    CornerRadius="50"
+                    Padding="4">
+
+                <StackPanel Orientation="Horizontal"
+                            Spacing="4">
+                    <RadioButton Classes="navItem"
+                                 Content="Topli obrok"
+                                 Tag="BowlChopsticks"
+                                 GroupName="MainNav"
+                                 IsChecked="True"
+                                 Click="TopliObrok_Click" />
+
+                    <RadioButton Classes="navItem"
+                                 Content="Radni raspored"
+                                 Tag="Calendar"
+                                 GroupName="MainNav"
+                                 Click="Radniraspored_Click" />
+
+                    <RadioButton Name="RadniciNav"
+                                 Classes="navItem"
+                                 Content="Radnici"
+                                 Tag="People"
                                  GroupName="MainNav"
                                  Click="Radnici_Click" />
                 </StackPanel>
+            </Border>
 
-                <StackPanel Grid.Row="2">
-                    <Button Classes="actionItem" Content="Postavke" Name="PostavkeBtn" />
-                    <Button Classes="actionItem" Content="Odjava" Name="OdjavaBtn" IsVisible="false"
-                            Click="Odjava_Click" />
+            <Button Grid.Column="2"
+                    Classes="userButton"
+                    Background="{DynamicResource SystemChromeMediumColor}"
+                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+
+                <StackPanel Orientation="Horizontal"
+                            Spacing="10"
+                            VerticalAlignment="Center">
+                    <Border Width="36"
+                            Height="36"
+                            CornerRadius="18"
+                            Background="{DynamicResource SystemChromeLowColor}">
+                        <TextBlock Name="UserInitial"
+                                   Text="?"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+
+                    <StackPanel Spacing="2" VerticalAlignment="Center">
+                        <TextBlock Name="UserFullName"
+                                   FontSize="13"
+                                   FontWeight="SemiBold" />
+
+                        <TextBlock Text="Korisnički račun"
+                                   FontSize="11"
+                                   Foreground="#A1A1AA" />
+                    </StackPanel>
+
+                    <!-- <ic:FluentIcon Icon="ChevronDown" -->
+                    <!--                FontSize="16" -->
+                    <!--                Foreground="#A1A1AA" -->
+                    <!--                Margin="4,0,2,0" /> -->
                 </StackPanel>
-            </Grid>
-        </Border>
+            </Button>
 
-        <ContentControl x:Name="ContentArea" Grid.Column="1" />
+        </Grid>
+
+        <ContentControl x:Name="ContentArea" Grid.Row="1" Padding="24 0 24 24" />
     </Grid>
-</UserControl>
+</Window>

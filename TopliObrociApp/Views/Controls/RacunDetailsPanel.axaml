@@ -1,0 +1,99 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="TopliObrociApp.Views.Controls.RacunDetailsPanel"
+    xmlns:models="using:TopliObrociApp.DTOs">
+    <Border Width="420"
+            Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+            BorderThickness="1"
+            CornerRadius="15"
+            Padding="24">
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="20">
+            <Grid ColumnDefinitions="*, Auto">
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Detalji računa"
+                               FontSize="22"
+                               FontWeight="SemiBold" />
+
+                    <TextBlock x:Name="ReceiptDateText"
+                               Foreground="Gray" />
+                </StackPanel>
+
+                <Border Grid.Column="1" x:Name="ReceiptStornoBadge"
+                        Background="{DynamicResource SystemControlErrorTextForegroundBrush}"
+                        CornerRadius="6"
+                        Padding="10,5"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        IsVisible="False">
+                    <TextBlock Text="Storniran"
+                               Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                               FontWeight="SemiBold"
+                               FontSize="12" />
+                </Border>
+            </Grid>
+
+            <DataGrid Grid.Row="1"
+                      x:Name="ReceiptItemsGrid"
+                      x:DataType="models:RacunStavkaDTO"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      GridLinesVisibility="Horizontal">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Artikal"
+                                        Binding="{Binding NazivArtikla}"
+                                        Width="*" />
+
+                    <DataGridTextColumn Header="Kol."
+                                        Binding="{Binding Kolicina}"
+                                        Width="65" />
+
+                    <DataGridTextColumn Header="Iznos"
+                                        Binding="{Binding IznosSaPopustom, StringFormat='{}{0:N2}'}"
+                                        Width="100" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="2"
+                        Spacing="16">
+                <Border
+                    Padding="0 16">
+                    <StackPanel Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Broj artikala"
+                                       Foreground="#A1A1AA" />
+
+                            <TextBlock x:Name="ItemsCountText"
+                                       Grid.Column="1"
+                                       FontWeight="Medium" />
+                        </Grid>
+
+                        <Border Height="1"
+                                Background="{DynamicResource SystemChromeDisabledHighColor}" />
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="UKUPNO"
+                                       FontSize="16"
+                                       FontWeight="SemiBold" />
+
+                            <TextBlock x:Name="TotalAmountText"
+                                       Grid.Column="1"
+                                       FontSize="20"
+                                       FontWeight="Bold" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Button Content="Zatvori"
+                        CornerRadius="10"
+                        Padding="10"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Click="Close_Click" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

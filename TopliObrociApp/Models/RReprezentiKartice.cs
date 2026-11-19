@@ -20,7 +20,7 @@ public class RReprezentiKartice
 
     [Column("IZNOS")] public decimal? Iznos { get; init; }
 
-    [Column("STORNO")] public int Storno { get; init; }
+    [Column("STORNO")] public int? Storno { get; set; }
 
-    [Column("ID_FISKALNOG_PERIODA")] public long IdFiskalnogPerioda { get; init; }
+    public string Status => Storno == 1 ? "Storno" : "";
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using TopliObrociApp.Models;
 using TopliObrociApp.Services;
 
 namespace TopliObrociApp.Views;
@@ -22,6 +23,20 @@ public partial class TopliObrokView : UserControl
 
         _authSession = authSession;
         Loaded += async (_, __) => { await UpdateScreen(); };
+
+        RacunDetailsPanel.CloseRequested += (_, _) => { ReceiptDetailsOverlay.IsVisible = false; };
+
+        ReceiptsGrid.DoubleTapped += async (_, _) =>
+        {
+            if (ReceiptsGrid.SelectedItem is not RReprezentiKartice racun)
+                return;
+
+            if (!racun.IdDokumentaVeze.HasValue)
+                return;
+
+            ReceiptDetailsOverlay.IsVisible = true;
+            await RacunDetailsPanel.ShowReceiptAsync(racun);
+        };
     }
 
     private async Task UpdateScreen()
@@ -35,7 +50,6 @@ public partial class TopliObrokView : UserControl
             var workingDays = CalculateWorkingDays(_currentMonth);
             var absentDays = (int)(AbsentDaysInput.Value ?? 0);
             var billableDays = Math.Max(0, workingDays - absentDays);
-
             var racuni = await _garsonService.GetRacuniAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
             var total = await _garsonService.GetUkupnoAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
             const decimal iznosPoDanu = 10;
