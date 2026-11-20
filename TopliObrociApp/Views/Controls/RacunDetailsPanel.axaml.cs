@@ -31,7 +31,7 @@ public partial class RacunDetailsPanel : UserControl
 
         var stavke = await _garsonService.GetStavkeRacunaAsync(
             receipt.IdDokumentaVeze.Value);
-        var cijeliRacunStorniran = stavke.Count > 0;
+        var cijeliRacunStorniran = stavke.Count > 0 && stavke.All(x => x.Storno == 1);
         var aktivneStavke = stavke.ToList();
 
         ReceiptItemsGrid.ItemsSource = stavke;

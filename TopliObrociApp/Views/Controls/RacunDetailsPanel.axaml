@@ -8,7 +8,9 @@
             BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
             BorderThickness="1"
             CornerRadius="15"
-            Padding="24">
+            Padding="24"
+            Margin="5 5 0 5"
+            BoxShadow="0 -1 16 0 #15000000">
         <Grid RowDefinitions="Auto,*,Auto"
               RowSpacing="20">
             <Grid ColumnDefinitions="*, Auto">
