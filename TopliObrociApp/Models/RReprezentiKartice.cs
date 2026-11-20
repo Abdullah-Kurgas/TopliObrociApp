@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TopliObrociApp.Enums;
 
 namespace TopliObrociApp.Models;
 
@@ -21,6 +22,9 @@ public class RReprezentiKartice
     [Column("IZNOS")] public decimal? Iznos { get; init; }
 
     [Column("STORNO")] public int? Storno { get; set; }
+
+    private Poslovnica? Poslovnica => PoslovnicaParser.Parse(Opis);
+    public string NazivPoslovnice => Poslovnica?.GetNaziv() ?? "Nep. poslovnica";
 
     public string Status => Storno == 1 ? "Storno" : "";
 }

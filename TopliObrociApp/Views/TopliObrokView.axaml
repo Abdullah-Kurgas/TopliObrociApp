@@ -275,7 +275,7 @@
                             <DataGridTextColumn
                                 Header="Poslovnica"
                                 Width="160"
-                                Binding="{Binding IdDokumentaVeze}" />
+                                Binding="{Binding NazivPoslovnice}" />
 
                             <DataGridTextColumn
                                 Header="Opis"
@@ -284,7 +284,7 @@
 
                             <DataGridTextColumn
                                 Header="Storno"
-                                Width="80"
+                                Width="90"
                                 Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}"
                                 Binding="{Binding Status}" />
 
@@ -300,8 +300,7 @@
 
         <Border
             x:Name="LoadingOverlay"
-            ZIndex="1000"
-            Background="#50000000">
+            ZIndex="1000">
             <StackPanel
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
