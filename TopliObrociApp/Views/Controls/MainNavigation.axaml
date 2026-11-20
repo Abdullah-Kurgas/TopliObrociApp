@@ -88,7 +88,7 @@
                         Spacing="3"
                         VerticalAlignment="Center">
 
-                <Image Source="avares://TopliObrociApp/Assets/Windows/icon-256x256px.png"
+                <Image Source="avares://TopliObrociApp/Assets/Windows/icon-48x48px.png"
                        Width="38"
                        Height="38"
                        Stretch="Uniform"

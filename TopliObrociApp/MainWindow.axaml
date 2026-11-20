@@ -3,9 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:TopliObrociApp.Views.Controls"
     x:Class="TopliObrociApp.MainWindow"
+    WindowStartupLocation="CenterScreen"
     Title="Topli obroci"
-    MinWidth="1450"
-    MinHeight="850">
+    MinWidth="1050"
+    MinHeight="550">
     <Grid RowDefinitions="*,Auto">
         <ContentControl x:Name="MainContent" Grid.Row="0" />
         <controls:UpdateNotification x:Name="UpdateNotificationPanel" Grid.Row="1" />

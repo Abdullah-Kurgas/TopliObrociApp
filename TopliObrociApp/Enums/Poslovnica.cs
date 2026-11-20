@@ -6,27 +6,17 @@ public enum Poslovnica
 {
     [Description("Socijalno")] REST,
 
-    [Description("Dobrinja")] DOB1,
+    [Description("Dobrinja")] DOB,
 
-    [Description("Dobrinja")] DOB2,
-
-    [Description("Dobrinja")] DOB3,
-
-    [Description("Čaršija")] CAR1,
-
-    [Description("Čaršija")] CAR2,
+    [Description("Čaršija")] CAR,
 
     [Description("Velešići")] VEL,
 
-    [Description("Koševo")] KOS1,
-
-    [Description("Koševo")] KOS2,
+    [Description("Koševo")] KOS,
 
     [Description("Vogošća")] VOG,
 
-    [Description("Vogošća 2")] VOG2,
-
-    [Description("Blažuj")] POSB1,
+    [Description("Blažuj")] POSB,
 
     [Description("Vogošća Centar")] VOGC,
 

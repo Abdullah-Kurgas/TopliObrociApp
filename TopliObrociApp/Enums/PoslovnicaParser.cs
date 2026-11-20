@@ -18,7 +18,7 @@ public static class PoslovnicaParser
             .FirstOrDefault();
 
         if (sifra == null) return null;
-        if (Enum.TryParse<Poslovnica>(sifra, true, out var poslovnica)) return null;
+        if (Enum.TryParse<Poslovnica>(sifra, true, out var poslovnica)) return poslovnica;
 
         return null;
     }
