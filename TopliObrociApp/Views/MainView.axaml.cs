@@ -1,7 +1,5 @@
 using System;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using TopliObrociApp.Enums;
 using TopliObrociApp.Services;
 
@@ -19,10 +17,24 @@ public partial class MainView : UserControl
         _authSession = authSession;
         _navigation = new NavigationService(ContentArea);
 
-        UserInitial.Text = _authSession.CurrentUser?.Initial ?? "?";
-        UserFullName.Text = _authSession.CurrentUser?.FullName ?? "?";
+        MainNavigationControl.SetUser(
+            _authSession.CurrentUser?.Initial ?? "?",
+            _authSession.CurrentUser?.FullName ?? "?"
+        );
+
+        MainNavigationControl.TopliObrokRequested += (_, _) =>
+            ShowTopliObrok();
+
+        MainNavigationControl.RadniRasporedRequested += (_, _) =>
+            _navigation.Navigate(new RadniRasporedView());
+
+        MainNavigationControl.RadniciRequested += (_, _) =>
+            _navigation.Navigate(new KorisniciView());
+
+        MainNavigationControl.LogoutRequested += Odjava_Click;
 
         ApplyRolePermissions();
+
         ShowTopliObrok();
     }
 
@@ -31,37 +43,18 @@ public partial class MainView : UserControl
         _navigation.Navigate(new TopliObrokView(_authSession));
     }
 
-    private void TopliObrok_Click(object? sender, RoutedEventArgs e)
-    {
-        ShowTopliObrok();
-    }
-
-    private void Radniraspored_Click(object? sender, RoutedEventArgs e)
-    {
-        _navigation.Navigate(new RadniRasporedView());
-    }
-
-    private void Radnici_Click(object? sender, RoutedEventArgs e)
-    {
-        _navigation.Navigate(new KorisniciView());
-    }
-
     private void ApplyRolePermissions()
     {
         var role = _authSession.CurrentUser!.Role;
 
-        RadniciNav.IsVisible = role == Role.Administrator;
-        // PostavkeBtn.IsVisible = role == Role.Administrator;
+        MainNavigationControl.SetRadniciVisibility(
+            role == Role.Administrator
+        );
     }
 
-    private async void Odjava_Click(object? sender, RoutedEventArgs e)
+    private async void Odjava_Click(object? sender, EventArgs eventArgs)
     {
         await _authSession.LogoutAsync();
         Environment.Exit(0);
-    }
-
-    private void DoubleTapped(object? sender, TappedEventArgs e)
-    {
-        // OdjavaBtn.IsVisible = !OdjavaBtn.IsVisible;
     }
 }
