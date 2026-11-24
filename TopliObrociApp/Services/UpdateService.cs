@@ -20,9 +20,7 @@ public class UpdateService
             var json = await File.ReadAllTextAsync(UpdatePath);
             var update = JsonSerializer.Deserialize<UpdateInfo>(json);
 
-            if (update == null || !Version.TryParse(update.Version, out var latestVersion))
-                return null;
-
+            if (update == null || !Version.TryParse(update.Version, out var latestVersion)) return null;
             var currentVersion = Assembly.GetEntryAssembly()?.GetName().Version ?? new Version(1, 0, 0);
 
             return latestVersion > currentVersion ? update : null;

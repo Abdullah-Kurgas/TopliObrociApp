@@ -63,75 +63,39 @@
             </Grid>
 
             <Grid Grid.Row="1" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
-                <Grid
-                    RowDefinitions="Auto,Auto"
-                    RowSpacing="16">
-
-                    <Border
-                        Grid.Row="0"
-                        Padding="20"
-                        CornerRadius="16"
-                        BorderThickness="1"
-                        Background="{DynamicResource SystemChromeMediumColor}"
-                        BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                        <StackPanel Spacing="13">
-                            <StackPanel Spacing="5">
-                                <TextBlock
-                                    Text="Preostalo za potrošiti"
-                                    Opacity="0.56" />
-
-                                <TextBlock
-                                    x:Name="RemainingAmountText"
-                                    Text="0,00 KM"
-                                    FontSize="32"
-                                    FontWeight="Bold" />
-                            </StackPanel>
-
+                <Border
+                    Grid.Row="0"
+                    Padding="20"
+                    CornerRadius="16"
+                    BorderThickness="1"
+                    Background="{DynamicResource SystemChromeMediumColor}"
+                    BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
+                    <StackPanel Spacing="13">
+                        <StackPanel Spacing="5">
                             <TextBlock
-                                x:Name="UsageSummaryText"
-                                Text="Potrošeno 0,00 KM od 0,00 KM"
+                                Text="Preostalo za potrošiti"
                                 Opacity="0.56" />
 
-                            <ProgressBar
-                                x:Name="UsageProgressBar"
-                                Minimum="0"
-                                Maximum="100"
-                                Height="7"
-                                IsIndeterminate="False" />
+                            <TextBlock
+                                x:Name="RemainingAmountText"
+                                Text="0,00 KM"
+                                FontSize="32"
+                                FontWeight="Bold" />
                         </StackPanel>
-                    </Border>
 
-                    <Border Grid.Row="1"
-                            Padding="16"
-                            CornerRadius="14"
-                            BorderThickness="1"
-                            Background="{DynamicResource SystemChromeMediumColor}"
-                            BorderBrush="{DynamicResource SystemChromeDisabledHighColor}">
-                        <Grid ColumnDefinitions="*,110">
-                            <Grid RowDefinitions="*, Auto">
-                                <TextBlock
-                                    Text="Izostali dani"
-                                    FontSize="16"
-                                    FontWeight="Medium" />
+                        <TextBlock
+                            x:Name="UsageSummaryText"
+                            Text="Potrošeno 0,00 KM od 0,00 KM"
+                            Opacity="0.56" />
 
-                                <TextBlock Grid.Row="1"
-                                           Text="Unesi broj dana u kojima nisi koristio pravo"
-                                           FontSize="13"
-                                           Opacity="0.56" />
-                            </Grid>
-
-                            <NumericUpDown
-                                x:Name="AbsentDaysInput"
-                                Grid.Column="1"
-                                Value="0"
-                                Minimum="0"
-                                Maximum="31"
-                                Increment="1"
-                                ShowButtonSpinner="False"
-                                ValueChanged="AbsentDaysChanged" />
-                        </Grid>
-                    </Border>
-                </Grid>
+                        <ProgressBar
+                            x:Name="UsageProgressBar"
+                            Minimum="0"
+                            Maximum="100"
+                            Height="7"
+                            IsIndeterminate="False" />
+                    </StackPanel>
+                </Border>
 
                 <Grid
                     Grid.Column="1"

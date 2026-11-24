@@ -52,10 +52,20 @@
         <Style Selector="Button.userButton">
             <Setter Property="Height" Value="50" />
             <Setter Property="MaxHeight" Value="50" />
-            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="10 8 16 8" />
             <Setter Property="CornerRadius" Value="50" />
+
+            <Style Selector="^:pressed">
+                <Setter Property="RenderTransform" Value="none" />
+            </Style>
+            <Style
+                Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter, ^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource SystemChromeDisabledHighColor}" />
+            </Style>
         </Style>
+
 
         <Style Selector="Button.dropdownItem">
             <Setter Property="Background" Value="Transparent" />
@@ -80,6 +90,7 @@
                 Height="50"
                 Background="{DynamicResource SystemChromeMediumColor}"
                 BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                BorderThickness="1"
                 CornerRadius="50"
                 HorizontalAlignment="Left"
                 Padding="14,0,18,0">
@@ -88,7 +99,7 @@
                         Spacing="3"
                         VerticalAlignment="Center">
 
-                <Image Source="avares://TopliObrociApp/Assets/Windows/icon-48x48px.png"
+                <Image Source="avares://TopliObrociApp/Assets/Windows/icon-32x32px.png"
                        Width="38"
                        Height="38"
                        Stretch="Uniform"
@@ -107,6 +118,7 @@
                 Height="50"
                 Background="{DynamicResource SystemChromeMediumColor}"
                 BorderBrush="{DynamicResource SystemChromeDisabledHighColor}"
+                BorderThickness="1"
                 CornerRadius="50"
                 Padding="4">
 
@@ -123,7 +135,6 @@
                              Content="Radni raspored"
                              Tag="Calendar"
                              GroupName="MainNav"
-                             IsVisible="False"
                              Click="Radniraspored_Click" />
 
                 <RadioButton x:Name="RadniciNav"

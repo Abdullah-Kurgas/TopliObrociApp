@@ -1,0 +1,257 @@
+<UserControl
+    x:Class="TopliObrociApp.Views.RadniRasporedView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:primitives="using:Avalonia.Controls.Primitives"
+    xmlns:global="clr-namespace:"
+    xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#303030" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="9" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style Selector="Button.nav-button">
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Background" Value="#303030" />
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+
+        <Style Selector="Button.calendar-day">
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Margin" Value="3" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+
+            <Style Selector="^:disabled">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+            <Style Selector="^:pressed">
+                <Setter Property="RenderTransform" Value="none" />
+            </Style>
+        </Style>
+
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="{DynamicResource SystemChromeMediumColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemChromeDisabledHighColor}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="Padding" Value="18" />
+        </Style>
+
+        <Style Selector="CheckBox">
+            <Setter Property="Foreground" Value="#A1A1AA" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto"
+          RowSpacing="20">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="4">
+                <TextBlock Text="Radni raspored"
+                           FontSize="25"
+                           FontWeight="SemiBold" />
+
+                <TextBlock Text="Upravljanje radnim danima i izostancima"
+                           Foreground="#999999"
+                           FontSize="14" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*,*,*"
+              ColumnSpacing="14">
+
+            <Border Classes="panel">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Ukupno radnih dana"
+                               Foreground="#A1A1AA"
+                               FontSize="13" />
+
+                    <TextBlock x:Name="WorkingDaysText"
+                               Text="0"
+                               FontSize="27"
+                               FontWeight="Bold" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Classes="panel">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Izostanci"
+                               Foreground="#A1A1AA"
+                               FontSize="13" />
+
+                    <TextBlock x:Name="AbsencesCountText"
+                               Text="0"
+                               FontSize="27"
+                               FontWeight="Bold"
+                               Foreground="#F59E7B" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Classes="panel">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Dani obračuna"
+                               Foreground="#A1A1AA"
+                               FontSize="13" />
+
+                    <TextBlock x:Name="BillableDaysText"
+                               Text="0"
+                               FontSize="27"
+                               FontWeight="Bold"
+                               Foreground="#4ADE80" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- MAIN CONTENT -->
+        <Grid Grid.Row="2"
+              ColumnDefinitions="2*,1*"
+              ColumnSpacing="16">
+
+            <Border Classes="panel">
+                <Grid RowDefinitions="Auto,*,Auto"
+                      RowSpacing="16">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <StackPanel>
+                            <TextBlock
+                                x:Name="MonthTitle"
+                                Text="Novembar 2026."
+                                FontSize="21"
+                                FontWeight="SemiBold" />
+
+                            <TextBlock
+                                Text="Klikni na radni dan da označiš izostanak."
+                                Foreground="#999999"
+                                FontSize="13" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <Button Classes="nav-button" Click="PreviousMonth_Click">
+                                <avalonia:FluentIcon Icon="ChevronLeft"
+                                                     FontSize="20"
+                                                     FontWeight="Medium"
+                                                     VerticalAlignment="Center" />
+                            </Button>
+
+                            <Button Classes="nav-button" Click="NextMonth_Click">
+                                <avalonia:FluentIcon Icon="ChevronRight"
+                                                     FontSize="20"
+                                                     FontWeight="Medium"
+                                                     VerticalAlignment="Center" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1" RowDefinitions="Auto,*" RowSpacing="6" MinHeight="260">
+
+                        <primitives:UniformGrid Columns="7">
+                            <TextBlock Text="Pon" Foreground="#999999" HorizontalAlignment="Center" />
+                            <TextBlock Text="Uto" Foreground="#999999" HorizontalAlignment="Center" />
+                            <TextBlock Text="Sri" Foreground="#999999" HorizontalAlignment="Center" />
+                            <TextBlock Text="Čet" Foreground="#999999" HorizontalAlignment="Center" />
+                            <TextBlock Text="Pet" Foreground="#999999" HorizontalAlignment="Center" />
+                            <TextBlock Text="Sub" Foreground="#999999" HorizontalAlignment="Center" />
+                            <TextBlock Text="Ned" Foreground="#999999" HorizontalAlignment="Center" />
+                        </primitives:UniformGrid>
+
+                        <ItemsControl Grid.Row="1"
+                                      x:Name="CalendarItems"
+                                      VerticalAlignment="Stretch"
+                                      HorizontalAlignment="Stretch">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <primitives:UniformGrid Columns="7" Rows="6" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="global:CalendarDay">
+                                    <Button Classes="calendar-day"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Content="{Binding Label}"
+                                            Background="{Binding Background}"
+                                            Foreground="{Binding Foreground}"
+                                            IsEnabled="{Binding IsEnabled}"
+                                            Click="CalendarDay_Click" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+
+                    <StackPanel Grid.Row="2"
+                                Orientation="Horizontal"
+                                Spacing="22">
+
+                        <StackPanel Orientation="Horizontal" Spacing="7">
+                            <Border Width="11" Height="11"
+                                    Background="#214B36"
+                                    CornerRadius="3" />
+                            <TextBlock Text="Radni dan"
+                                       Foreground="#A1A1AA"
+                                       FontSize="12" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="7">
+                            <Border Width="11" Height="11"
+                                    Background="#783D32"
+                                    CornerRadius="3" />
+                            <TextBlock Text="Izostanak"
+                                       Foreground="#A1A1AA"
+                                       FontSize="12" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="7">
+                            <Border Width="11" Height="11"
+                                    Background="#292929"
+                                    CornerRadius="3" />
+                            <TextBlock Text="Neradni dan"
+                                       Foreground="#A1A1AA"
+                                       FontSize="12" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <StackPanel Grid.Column="1" x:Name="DaysPanel" Spacing="15">
+                <CheckBox Content="Ponedjeljak" Tag="0" IsCheckedChanged="ScheduleChanged" />
+                <CheckBox Content="Utorak" Tag="1" IsCheckedChanged="ScheduleChanged" />
+                <CheckBox Content="Srijeda" Tag="2" IsCheckedChanged="ScheduleChanged" />
+                <CheckBox Content="Četvrtak" Tag="3" IsCheckedChanged="ScheduleChanged" />
+                <CheckBox Content="Petak" Tag="4" IsCheckedChanged="ScheduleChanged" />
+                <CheckBox Content="Subota" Tag="5" IsCheckedChanged="ScheduleChanged" />
+                <CheckBox Content="Nedjelja" Tag="6" IsCheckedChanged="ScheduleChanged" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto"
+              ColumnSpacing="12">
+            <TextBlock x:Name="StatusText"
+                       Text=""
+                       Foreground="#4ADE80"
+                       VerticalAlignment="Center" />
+
+            <Button Grid.Column="1"
+                    Content="Sačuvaj raspored"
+                    Background="#2563EB"
+                    Padding="24,12"
+                    FontWeight="SemiBold"
+                    Click="Save_Click" />
+        </Grid>
+    </Grid>
+</UserControl>

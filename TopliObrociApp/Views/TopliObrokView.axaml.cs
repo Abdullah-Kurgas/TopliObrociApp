@@ -46,12 +46,19 @@ public partial class TopliObrokView : UserControl
         try
         {
             MonthNameText.Text = _currentMonth.ToString("MMMM yyyy");
+            var schedule = RadniRasporedService.Instance;
+            await schedule.LoadAsync();
 
-            var workingDays = CalculateWorkingDays(_currentMonth);
-            var absentDays = (int)(AbsentDaysInput.Value ?? 0);
-            var billableDays = Math.Max(0, workingDays - absentDays);
+            var year = _currentMonth.Year;
+            var month = _currentMonth.Month;
+
+            var workingDays = schedule.GetWorkingDays(year, month);
+            var absentDays = schedule.GetAbsenceCount(year, month);
+            var billableDays = schedule.GetBillableDays(year, month);
+
             var racuni = await _garsonService.GetRacuniAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
             var total = await _garsonService.GetUkupnoAsync(_currentMonth, _authSession.CurrentUser!.GarsonId);
+
             const decimal iznosPoDanu = 10;
             var ukupnoNaRaspolaganju = billableDays * iznosPoDanu;
             var potroseno = total;
@@ -97,11 +104,6 @@ public partial class TopliObrokView : UserControl
         }
 
         return days;
-    }
-
-    private void AbsentDaysChanged(object? sender, NumericUpDownValueChangedEventArgs e)
-    {
-        if (!_isLoading) _ = UpdateScreen();
     }
 
     private void PreviousMonth_Click(object? sender, RoutedEventArgs e)

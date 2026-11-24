@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>Assets\Windows\TopliObroci.ico</ApplicationIcon>
-        <Version>2.0.1</Version>
+        <Version>3.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
